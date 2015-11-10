@@ -1,6 +1,8 @@
 
 package Interfaces;
 
+import java.awt.Color;
+
 /**
  *
  * @author Caffia
@@ -13,6 +15,8 @@ public class SubMenuProducto extends javax.swing.JDialog {
     public SubMenuProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        getContentPane().setBackground(Color.DARK_GRAY);
+        
     }
 
 

@@ -1,6 +1,8 @@
 
 package Interfaces;
 
+import java.awt.Color;
+
 /**
  *
  * @author Caffia
@@ -13,6 +15,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
     public SubMenuVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        getContentPane().setBackground(Color.DARK_GRAY);
     }
 
     @SuppressWarnings("unchecked")
@@ -28,7 +31,9 @@ public class SubMenuVenta extends javax.swing.JDialog {
         setPreferredSize(new java.awt.Dimension(500, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        nuevaVenta.setBackground(new java.awt.Color(102, 102, 102));
         nuevaVenta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        nuevaVenta.setForeground(new java.awt.Color(255, 255, 255));
         nuevaVenta.setText("Nueva Venta");
         nuevaVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -37,7 +42,9 @@ public class SubMenuVenta extends javax.swing.JDialog {
         });
         getContentPane().add(nuevaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 270, -1));
 
+        jTable1.setBackground(new java.awt.Color(0, 0, 0));
         jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(102, 102, 102));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},

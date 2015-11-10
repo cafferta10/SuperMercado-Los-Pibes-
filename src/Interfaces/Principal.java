@@ -1,6 +1,8 @@
 
 package Interfaces;
 
+import java.awt.Color;
+
 
 /**
  *
@@ -13,6 +15,8 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        getContentPane().setBackground(Color.DARK_GRAY);
+       
     }
 
 
@@ -23,7 +27,7 @@ public class Principal extends javax.swing.JFrame {
         subMenuTarjeta = new javax.swing.JButton();
         subMenuVenta = new javax.swing.JButton();
         subMenuProducto = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        tituloPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -31,7 +35,9 @@ public class Principal extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(500, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        subMenuTarjeta.setBackground(new java.awt.Color(102, 102, 102));
         subMenuTarjeta.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        subMenuTarjeta.setForeground(new java.awt.Color(255, 255, 255));
         subMenuTarjeta.setText("TARJETA");
         subMenuTarjeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -40,7 +46,9 @@ public class Principal extends javax.swing.JFrame {
         });
         getContentPane().add(subMenuTarjeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 270, -1));
 
+        subMenuVenta.setBackground(new java.awt.Color(102, 102, 102));
         subMenuVenta.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        subMenuVenta.setForeground(new java.awt.Color(255, 255, 255));
         subMenuVenta.setText("VENTA");
         subMenuVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         subMenuVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -50,7 +58,9 @@ public class Principal extends javax.swing.JFrame {
         });
         getContentPane().add(subMenuVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 270, -1));
 
+        subMenuProducto.setBackground(new java.awt.Color(102, 102, 102));
         subMenuProducto.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        subMenuProducto.setForeground(new java.awt.Color(255, 255, 255));
         subMenuProducto.setText("PRODUCTO");
         subMenuProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,10 +69,11 @@ public class Principal extends javax.swing.JFrame {
         });
         getContentPane().add(subMenuProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 270, -1));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("SUPERMERCADO LP");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, -1));
+        tituloPrincipal.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        tituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
+        tituloPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tituloPrincipal.setText("SUPERMERCADO LP");
+        getContentPane().add(tituloPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -116,9 +127,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton subMenuProducto;
     private javax.swing.JButton subMenuTarjeta;
     private javax.swing.JButton subMenuVenta;
+    private javax.swing.JLabel tituloPrincipal;
     // End of variables declaration//GEN-END:variables
 }

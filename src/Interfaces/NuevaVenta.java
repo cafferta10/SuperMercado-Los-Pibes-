@@ -1,6 +1,8 @@
 
 package Interfaces;
 
+import java.awt.Color;
+
 /**
  *
  * @author Caffia
@@ -13,6 +15,7 @@ public class NuevaVenta extends javax.swing.JDialog {
     public NuevaVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        getContentPane().setBackground(Color.DARK_GRAY);
     }
 
 
@@ -32,14 +35,19 @@ public class NuevaVenta extends javax.swing.JDialog {
         setPreferredSize(new java.awt.Dimension(500, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTextField1.setBackground(new java.awt.Color(0, 0, 0));
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 200, 30));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CODIGO DEL PRODUCTO");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 67, -1, 30));
 
+        botonAgregarProducto.setBackground(new java.awt.Color(102, 102, 102));
         botonAgregarProducto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        botonAgregarProducto.setForeground(new java.awt.Color(255, 255, 255));
         botonAgregarProducto.setText("ok");
         botonAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,6 +56,8 @@ public class NuevaVenta extends javax.swing.JDialog {
         });
         getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, 30));
 
+        jTable1.setBackground(new java.awt.Color(0, 0, 0));
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -82,9 +92,10 @@ public class NuevaVenta extends javax.swing.JDialog {
 
         jLabel3.setBackground(new java.awt.Color(51, 51, 51));
         jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("NUEVA VENTA");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
