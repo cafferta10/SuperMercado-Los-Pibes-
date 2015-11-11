@@ -24,7 +24,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
 
         nuevaVenta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaVenta = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
@@ -42,10 +42,10 @@ public class SubMenuVenta extends javax.swing.JDialog {
         });
         getContentPane().add(nuevaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 270, -1));
 
-        jTable1.setBackground(new java.awt.Color(0, 0, 0));
-        jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(102, 102, 102));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaVenta.setBackground(new java.awt.Color(0, 0, 0));
+        tablaVenta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tablaVenta.setForeground(new java.awt.Color(102, 102, 102));
+        tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -72,8 +72,8 @@ public class SubMenuVenta extends javax.swing.JDialog {
                 "Venta", "Total", "Tarjeta", "ID", "Fecha"
             }
         ));
-        jTable1.setPreferredSize(new java.awt.Dimension(375, 398));
-        jScrollPane1.setViewportView(jTable1);
+        tablaVenta.setPreferredSize(new java.awt.Dimension(375, 398));
+        jScrollPane1.setViewportView(tablaVenta);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 470, 250));
 
@@ -127,7 +127,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton nuevaVenta;
+    private javax.swing.JTable tablaVenta;
     // End of variables declaration//GEN-END:variables
 }

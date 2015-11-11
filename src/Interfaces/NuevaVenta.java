@@ -23,11 +23,11 @@ public class NuevaVenta extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        barraCodigoProducto = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         botonAgregarProducto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaVenta = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -35,10 +35,10 @@ public class NuevaVenta extends javax.swing.JDialog {
         setPreferredSize(new java.awt.Dimension(500, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 200, 30));
+        barraCodigoProducto.setBackground(new java.awt.Color(0, 0, 0));
+        barraCodigoProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        barraCodigoProducto.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(barraCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 200, 30));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -56,9 +56,9 @@ public class NuevaVenta extends javax.swing.JDialog {
         });
         getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, 30));
 
-        jTable1.setBackground(new java.awt.Color(0, 0, 0));
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaVenta.setBackground(new java.awt.Color(0, 0, 0));
+        tablaVenta.setForeground(new java.awt.Color(255, 255, 255));
+        tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -85,8 +85,8 @@ public class NuevaVenta extends javax.swing.JDialog {
                 "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"
             }
         ));
-        jTable1.setPreferredSize(new java.awt.Dimension(300, 398));
-        jScrollPane1.setViewportView(jTable1);
+        tablaVenta.setPreferredSize(new java.awt.Dimension(300, 398));
+        jScrollPane1.setViewportView(tablaVenta);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 470, 230));
 
@@ -147,11 +147,11 @@ public class NuevaVenta extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField barraCodigoProducto;
     private javax.swing.JButton botonAgregarProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tablaVenta;
     // End of variables declaration//GEN-END:variables
 }

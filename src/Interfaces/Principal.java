@@ -79,7 +79,8 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void subMenuProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuProductoActionPerformed
-        System.exit(0);
+        SubMenuProducto nuevoProducto = new SubMenuProducto (new javax.swing.JFrame(), true);
+        nuevoProducto.setVisible(true);
     }//GEN-LAST:event_subMenuProductoActionPerformed
 
     private void subMenuVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuVentaActionPerformed
@@ -89,7 +90,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuVentaActionPerformed
 
     private void subMenuTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuTarjetaActionPerformed
-        System.exit(0);
+        SubMenuTarjeta nuevaTarjeta = new SubMenuTarjeta(new javax.swing.JFrame(), true);
+        nuevaTarjeta.setVisible(true);
     }//GEN-LAST:event_subMenuTarjetaActionPerformed
 
 
