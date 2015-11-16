@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Integer;
+
 
 import com.csvreader.CsvWriter;
 import com.csvreader.CsvReader;
@@ -19,13 +21,10 @@ import Entidades.Tarjeta;
 public  class Archivo {
     
     
-    static List<Venta> venta = new ArrayList<Venta>();
-    static List<Producto> producto = new ArrayList<Producto>();
-    static List<Tarjeta> tarjeta = new ArrayList<Tarjeta>();
     
-    private void inicializarTarjeta(){
+    private static void inicializarTarjeta(){
         
-        String outputFile = "Archivos/archivo_tarjeta.csv";
+        String outputFile = "test/archivo_tarjeta.csv";
         
 
          try {
@@ -45,9 +44,9 @@ public  class Archivo {
     }
     
     
-    private void inicializarProducto(){
+    private static void inicializarProducto(){
         
-        String outputFile = "Archivos/archivo_producto.csv";
+        String outputFile = "test/archivo_producto.csv";
         
           try {
 
@@ -57,6 +56,7 @@ public  class Archivo {
             csvOutput.write("Stock");
             csvOutput.write("Precio");
             csvOutput.write("Descuento");
+            csvOutput.write("Codigo");
             csvOutput.endRecord();
 
         
@@ -72,9 +72,23 @@ public  class Archivo {
     }
     
     
-    public void inicializarTodo(){
+    public static void inicializarTodo(){
+        
+        String outputFile = "test/archivo_producto.csv";
+        String outputFile2 = "test/archivo_tarjeta.csv";
+        boolean alreadyExists = new File(outputFile).exists();
+        
+        if(alreadyExists){
+            File ficheroProducto = new File(outputFile);
+            File ficheroTarjeta = new File(outputFile2);
+
+        }
+        else{
         inicializarTarjeta();
-        inicializarProducto();
+        inicializarProducto(); 
+        }
+        
+
     }
     
     
@@ -82,7 +96,7 @@ public  class Archivo {
     
     public static void nuevoProducto(Producto nuevoProducto){
         
-        String outputFile = "Archivos/archivo_producto.csv";
+        String outputFile = "test/archivo_producto.csv";
         
         try {
 
@@ -90,9 +104,13 @@ public  class Archivo {
             
     
             csvOutput.write(nuevoProducto.getNombre());
-            csvOutput.write(nuevoProducto.getStock());
-            csvOutput.write(nuevoProducto.getPrecio());
-            csvOutput.write(nuevoProducto.getDescuento());                
+            csvOutput.write(Integer.toString(nuevoProducto.getStock()));
+            csvOutput.write(Integer.toString(nuevoProducto.getPrecio()));
+            if (nuevoProducto.getDescuento())
+                csvOutput.write("SI");
+            else
+                csvOutput.write("NO");
+            csvOutput.write(Integer.toString(nuevoProducto.getCodigo()));
             csvOutput.endRecord();                   
             
             
@@ -107,7 +125,7 @@ public  class Archivo {
     
     public static void nuevaTarjeta(Tarjeta nuevaTarjeta){
         
-        String outputFile = "Archivos/archivo_tarjeta.csv";
+        String outputFile = "test/archivo_tarjeta.csv";
         
         try {
 
@@ -118,7 +136,7 @@ public  class Archivo {
             csvOutput.endRecord();
 
             csvOutput.write(nuevaTarjeta.getCodigo());
-            csvOutput.write(nuevaTarjeta.getPuntos());
+            csvOutput.write(Integer.toString(nuevaTarjeta.getPuntos()));
             csvOutput.endRecord();                   
             
             csvOutput.close();
@@ -138,13 +156,13 @@ public  class Archivo {
 			
 		
 			
-		CsvReader tarjeta_import = new CsvReader("Archivo/archivo_tarjeta.csv");
+		CsvReader tarjeta_import = new CsvReader("test/archivo_tarjeta.csv");
 		tarjeta_import.readHeaders();
 
 		while (tarjeta_import.readRecord())
 		{
 			String codigo = tarjeta_import.get(0);
-			int puntos = tarjeta_import.get(1);
+			int puntos = Integer.parseInt(tarjeta_import.get(1));
 				
 			listaTarjeta.add(new Tarjeta(codigo, puntos));				
 		}
@@ -153,9 +171,12 @@ public  class Archivo {
 			
 			
 	} 
-        catch (Exception e) {
+        catch (FileNotFoundException e) {
 		e.printStackTrace();
-	}
+		} 
+        catch (IOException e) {
+		e.printStackTrace();
+		}
         
         return  listaTarjeta;
     } 
@@ -170,30 +191,82 @@ public  class Archivo {
 			
 		
 			
-		CsvReader producto_import = new CsvReader("Archivo/archivo_producto.csv");
+		CsvReader producto_import = new CsvReader("test/archivo_producto.csv");
 		producto_import.readHeaders();
 
 		while (producto_import.readRecord())
 		{
-			String codigo = producto_import.get("Nombre");
-			int puntos = producto_import.get("Stock");
-                        int precio = producto_import.get("Precio");
-                        boolean descuento = producto_import.get("Descuento");
-				
-			listaProducto.add(new Producto(codigo, puntos, precio,descuento));				
+                    String descripcion = producto_import.get("Nombre");
+                    int stock = Integer.parseInt(producto_import.get("Stock"));
+                    int precio = Integer.parseInt(producto_import.get("Precio"));
+                    boolean descuento = false;
+                    if ("SI".equals(producto_import.get("Descuento"))){                  
+                        descuento = true; 
+                       }
+                    int codigo = Integer.parseInt(producto_import.get("Codigo"));
+                                        
+                    listaProducto.add(new Producto(descripcion, stock, precio,descuento,codigo));				
 		}
 			
 		producto_import.close();
 			
 			
 	} 
-        catch (Exception e) {
+        catch (FileNotFoundException e) {
 		e.printStackTrace();
-	}
+		} 
+        catch (IOException e) {
+		e.printStackTrace();
+		}
         
         return  listaProducto;
         
         
+    }
+    
+    
+    
+    
+    public Producto busquedaProducto(int codigoBuscado){
+        
+        try {
+            
+            CsvReader producto_import = new CsvReader("test/archivo_producto.csv");
+            producto_import.readHeaders();
+            
+            while (producto_import.readRecord()){
+                
+                if (codigoBuscado == Integer.parseInt(producto_import.get("Codigo"))){
+                    
+                    String descripcion = producto_import.get("Nombre");
+                    int stock = Integer.parseInt(producto_import.get("Stock"));
+                    int precio = Integer.parseInt(producto_import.get("Precio"));
+                    boolean descuento = false;
+                    if ("SI".equals(producto_import.get("Descuento"))){                  
+                        descuento = true; 
+                       }                   
+                    int codigo = Integer.parseInt(producto_import.get("Codigo"));
+                    
+                    return new Producto(descripcion, stock, precio,descuento,codigo);
+                }
+                else{
+                    return null;
+                }
+                
+                
+            }
+                       
+            
+        }
+        
+        catch (FileNotFoundException e) {
+		e.printStackTrace();
+		} 
+        catch (IOException e) {
+		e.printStackTrace();
+		}
+        
+        return null;
     }
     
     
