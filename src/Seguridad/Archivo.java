@@ -4,14 +4,17 @@ package Seguridad;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.csvreader.CsvWriter;
+import com.csvreader.CsvReader;
 
 import Entidades.Venta;
 import Entidades.Producto;
 import Entidades.Tarjeta;
+
 
 public  class Archivo {
     
@@ -20,35 +23,20 @@ public  class Archivo {
     static List<Producto> producto = new ArrayList<Producto>();
     static List<Tarjeta> tarjeta = new ArrayList<Tarjeta>();
     
-    public static void guardarVenta(){
+    private void inicializarTarjeta(){
         
-        String outputFile = "Archivos/archivo_venta.csv";
+        String outputFile = "Archivos/archivo_tarjeta.csv";
         
-        boolean alreadyExists = new File(outputFile).exists();
-        
-        if(alreadyExists){
-        	File ficheroVenta = new File(outputFile);
-        	ficheroVenta.delete();
-        }        
-        
-        try {
+
+         try {
 
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
             
-            csvOutput.write("ID de Factura");
-            csvOutput.write("Fecha");
-            csvOutput.write("Total");
+            csvOutput.write("Codigo");
+            csvOutput.write("Puntos");
             csvOutput.endRecord();
-
-            for(Venta nuevaVenta : venta){
-    
-            	csvOutput.write(nuevaVenta.getIdFactura());
-            	csvOutput.write(nuevaVenta.getFecha());
-            	csvOutput.write(nuevaVenta.getTotal());
-            	csvOutput.endRecord();                   
-            }
-            
-            csvOutput.close();
+  
+             csvOutput.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,19 +45,11 @@ public  class Archivo {
     }
     
     
-    
-    public static void nuevoProducto(){
+    private void inicializarProducto(){
         
         String outputFile = "Archivos/archivo_producto.csv";
         
-        boolean alreadyExists = new File(outputFile).exists();
-        
-        if(alreadyExists){
-        	File ficheroProducto = new File(outputFile);
-        	ficheroProducto.delete();
-        }        
-        
-        try {
+          try {
 
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
             
@@ -79,14 +59,42 @@ public  class Archivo {
             csvOutput.write("Descuento");
             csvOutput.endRecord();
 
-            for(Producto nuevaProducto : producto){
+        
+        
+        csvOutput.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+    }
     
-            	csvOutput.write(nuevaProducto.getNombre());
-            	csvOutput.write(nuevaProducto.getStock());
-            	csvOutput.write(nuevaProducto.getPrecio());
-                csvOutput.write(nuevaProducto.getDescuento());                
-            	csvOutput.endRecord();                   
-            }
+    
+    public void inicializarTodo(){
+        inicializarTarjeta();
+        inicializarProducto();
+    }
+    
+    
+    
+    
+    public static void nuevoProducto(Producto nuevoProducto){
+        
+        String outputFile = "Archivos/archivo_producto.csv";
+        
+        try {
+
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
+            
+    
+            csvOutput.write(nuevoProducto.getNombre());
+            csvOutput.write(nuevoProducto.getStock());
+            csvOutput.write(nuevoProducto.getPrecio());
+            csvOutput.write(nuevoProducto.getDescuento());                
+            csvOutput.endRecord();                   
+            
             
             csvOutput.close();
 
@@ -97,16 +105,9 @@ public  class Archivo {
     }
     
     
-    public static void nuevaTarjeta(){
+    public static void nuevaTarjeta(Tarjeta nuevaTarjeta){
         
         String outputFile = "Archivos/archivo_tarjeta.csv";
-        
-        boolean alreadyExists = new File(outputFile).exists();
-        
-        if(alreadyExists){
-        	File ficheroTarjeta = new File(outputFile);
-        	ficheroTarjeta.delete();
-        }        
         
         try {
 
@@ -116,18 +117,82 @@ public  class Archivo {
             csvOutput.write("Puntos");
             csvOutput.endRecord();
 
-            for(Tarjeta nuevaTarjeta : tarjeta){
-    
-            	csvOutput.write(nuevaTarjeta.getCodigo());
-            	csvOutput.write(nuevaTarjeta.getPuntos());
-            	csvOutput.endRecord();                   
-            }
+            csvOutput.write(nuevaTarjeta.getCodigo());
+            csvOutput.write(nuevaTarjeta.getPuntos());
+            csvOutput.endRecord();                   
             
             csvOutput.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+    }
+    
+    
+    public List listaTarjeta(){
+        
+        List<Tarjeta> listaTarjeta = new ArrayList<Tarjeta>();
+        
+        try {
+			
+		
+			
+		CsvReader tarjeta_import = new CsvReader("Archivo/archivo_tarjeta.csv");
+		tarjeta_import.readHeaders();
+
+		while (tarjeta_import.readRecord())
+		{
+			String codigo = tarjeta_import.get(0);
+			int puntos = tarjeta_import.get(1);
+				
+			listaTarjeta.add(new Tarjeta(codigo, puntos));				
+		}
+			
+		tarjeta_import.close();
+			
+			
+	} 
+        catch (Exception e) {
+		e.printStackTrace();
+	}
+        
+        return  listaTarjeta;
+    } 
+    
+    
+    
+    public List listaProducto(){
+        
+        List<Producto> listaProducto = new ArrayList<Producto>();
+        
+        try {
+			
+		
+			
+		CsvReader producto_import = new CsvReader("Archivo/archivo_producto.csv");
+		producto_import.readHeaders();
+
+		while (producto_import.readRecord())
+		{
+			String codigo = producto_import.get("Nombre");
+			int puntos = producto_import.get("Stock");
+                        int precio = producto_import.get("Precio");
+                        boolean descuento = producto_import.get("Descuento");
+				
+			listaProducto.add(new Producto(codigo, puntos, precio,descuento));				
+		}
+			
+		producto_import.close();
+			
+			
+	} 
+        catch (Exception e) {
+		e.printStackTrace();
+	}
+        
+        return  listaProducto;
+        
         
     }
     
