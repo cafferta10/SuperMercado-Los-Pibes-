@@ -7,6 +7,9 @@ import Seguridad.Archivo;
 import com.csvreader.CsvReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 
 public class SubMenuTarjeta extends javax.swing.JDialog {
@@ -18,6 +21,10 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         getContentPane().setBackground(Color.DARK_GRAY);
+        ArrayList listaTarjeta = Seguridad.Archivo.listaTarjeta();
+        DefaultTableModel modelo=(DefaultTableModel) tablaTarjeta.getModel();       
+        Tarjeta arreglo [] = new Tarjeta[listaTarjeta.size()];
+        tablaTarjeta.setModel(modelo);
     }
 
 
@@ -25,29 +32,29 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        nuevaTarjeta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaTarjeta = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(102, 102, 102));
-        jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("NUEVA TARJETA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        nuevaTarjeta.setBackground(new java.awt.Color(102, 102, 102));
+        nuevaTarjeta.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        nuevaTarjeta.setForeground(new java.awt.Color(255, 255, 255));
+        nuevaTarjeta.setText("NUEVA TARJETA");
+        nuevaTarjeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                nuevaTarjetaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, 40));
+        getContentPane().add(nuevaTarjeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 440, 40));
 
-        jTable1.setBackground(new java.awt.Color(0, 0, 0));
-        jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaTarjeta.setBackground(new java.awt.Color(0, 0, 0));
+        tablaTarjeta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tablaTarjeta.setForeground(new java.awt.Color(255, 255, 255));
+        tablaTarjeta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -74,16 +81,17 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
                 "CODIGO", "PUNTOS"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaTarjeta);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 90, 450, 250));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void nuevaTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaTarjetaActionPerformed
         String codigo;
         int puntos;
+        int cantidad = 0;
         try {
             
 
@@ -91,8 +99,13 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
 		
 			
             CsvReader tarjeta_import = new CsvReader("test/archivo_tarjeta.csv");     
-                
-            codigo = Integer.toString(tarjeta_import.getColumnCount());
+           
+            while (tarjeta_import.readRecord()){
+                cantidad ++;
+            }
+            
+            
+            codigo = Integer.toString(cantidad);
             puntos = 0;                
             tarjeta_import.close();
             
@@ -112,13 +125,13 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
         
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_nuevaTarjetaActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton nuevaTarjeta;
+    private javax.swing.JTable tablaTarjeta;
     // End of variables declaration//GEN-END:variables
 }

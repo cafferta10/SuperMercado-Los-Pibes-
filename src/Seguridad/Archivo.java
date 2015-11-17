@@ -13,7 +13,7 @@ import java.lang.Integer;
 import com.csvreader.CsvWriter;
 import com.csvreader.CsvReader;
 
-import Entidades.Venta;
+
 import Entidades.Producto;
 import Entidades.Tarjeta;
 
@@ -131,9 +131,6 @@ public  class Archivo {
 
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
             
-            csvOutput.write("Codigo");
-            csvOutput.write("Puntos");
-            csvOutput.endRecord();
 
             csvOutput.write(nuevaTarjeta.getCodigo());
             csvOutput.write(Integer.toString(nuevaTarjeta.getPuntos()));
@@ -148,9 +145,9 @@ public  class Archivo {
     }
     
     
-    public List listaTarjeta(){
+    public static ArrayList listaTarjeta(){
         
-        List<Tarjeta> listaTarjeta = new ArrayList<Tarjeta>();
+        ArrayList<Tarjeta> listaTarjeta = new ArrayList<Tarjeta>();
         
         try {
 			
@@ -161,8 +158,8 @@ public  class Archivo {
 
 		while (tarjeta_import.readRecord())
 		{
-			String codigo = tarjeta_import.get(0);
-			int puntos = Integer.parseInt(tarjeta_import.get(1));
+			String codigo = tarjeta_import.get("Codigo");
+			int puntos = Integer.parseInt(tarjeta_import.get("Puntos"));
 				
 			listaTarjeta.add(new Tarjeta(codigo, puntos));				
 		}
@@ -183,7 +180,7 @@ public  class Archivo {
     
     
     
-    public List listaProducto(){
+    public static List listaProducto(){
         
         List<Producto> listaProducto = new ArrayList<Producto>();
         
