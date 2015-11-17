@@ -21,12 +21,37 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         getContentPane().setBackground(Color.DARK_GRAY);
-        ArrayList listaTarjeta = Seguridad.Archivo.listaTarjeta();
-        DefaultTableModel modelo=(DefaultTableModel) tablaTarjeta.getModel();       
-        Tarjeta arreglo [] = new Tarjeta[listaTarjeta.size()];
-        tablaTarjeta.setModel(modelo);
+        cargarTabla();
+        
+        
     }
 
+    
+    private void cargarTabla(){
+        ArrayList<Tarjeta> listaTarjeta = Seguridad.Archivo.listaTarjeta();
+        DefaultTableModel modelo=(DefaultTableModel) tablaTarjeta.getModel();       
+        String arreglo [] = new String[2];
+        for (Tarjeta datoTarjeta: listaTarjeta){
+            arreglo[0] = datoTarjeta.getCodigo();
+            arreglo[1]=Integer.toString(datoTarjeta.getPuntos());
+            modelo.addRow(arreglo);
+            tablaTarjeta.setModel(modelo);
+        }
+        
+    }
+    
+    
+    private void agregarTabla(Tarjeta nuevaTarjeta){
+        DefaultTableModel modelo=(DefaultTableModel) tablaTarjeta.getModel();
+        
+        String arreglo [] = new String[2];
+        arreglo[0] = nuevaTarjeta.getCodigo();
+        arreglo[1] = Integer.toString(nuevaTarjeta.getPuntos());
+
+        modelo.addRow(arreglo);
+        tablaTarjeta.setModel(modelo);
+        
+     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,26 +81,7 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
         tablaTarjeta.setForeground(new java.awt.Color(255, 255, 255));
         tablaTarjeta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "CODIGO", "PUNTOS"
@@ -93,25 +99,20 @@ public class SubMenuTarjeta extends javax.swing.JDialog {
         int puntos;
         int cantidad = 0;
         try {
-            
-
-			
-		
-			
             CsvReader tarjeta_import = new CsvReader("test/archivo_tarjeta.csv");     
            
             while (tarjeta_import.readRecord()){
                 cantidad ++;
             }
-            
-            
             codigo = Integer.toString(cantidad);
             puntos = 0;                
             tarjeta_import.close();
             
             Tarjeta tarjeta = new Tarjeta (codigo,puntos);
-        
+            
         Archivo.nuevaTarjeta(tarjeta);
+        agregarTabla( tarjeta);
+        
                 
 			
 			

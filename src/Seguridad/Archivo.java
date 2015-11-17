@@ -44,7 +44,7 @@ public  class Archivo {
     }
     
     
-    private static void inicializarProducto(){
+    public static void inicializarProducto(){
         
         String outputFile = "test/archivo_producto.csv";
         
@@ -180,9 +180,9 @@ public  class Archivo {
     
     
     
-    public static List listaProducto(){
+    public static ArrayList listaProducto(){
         
-        List<Producto> listaProducto = new ArrayList<Producto>();
+        ArrayList<Producto> listaProducto = new ArrayList<Producto>();
         
         try {
 			
@@ -216,7 +216,7 @@ public  class Archivo {
 		e.printStackTrace();
 		}
         
-        return  listaProducto;
+        return listaProducto;
         
         
     }
@@ -265,6 +265,8 @@ public  class Archivo {
         
         return null;
     }
+    
+
     
     
 }
