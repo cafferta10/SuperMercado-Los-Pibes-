@@ -1,6 +1,7 @@
 
 package Seguridad;
 
+import Entidades.HistorialPrecio;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,10 +22,7 @@ public  class Archivo {
     
     
     private static void inicializarTarjeta(){
-        
         String outputFile = "test/archivo_tarjeta.csv";
-        
-
          try {
 
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
@@ -33,8 +31,23 @@ public  class Archivo {
             csvOutput.write("Puntos");
             csvOutput.endRecord();
   
-             csvOutput.close();
+            csvOutput.close();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static void inicializarHistorialProducto(){
+        String outputFile = "test/archivo_historial_producto.csv";
+        try {
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
+            csvOutput.write("ID");
+            csvOutput.write("PRERCIO");
+            csvOutput.write("FECHA");
+            csvOutput.write("ESTADO");
+            csvOutput.endRecord();
+            csvOutput.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,50 +56,47 @@ public  class Archivo {
     
     
     public static void inicializarProducto(){
-        
         String outputFile = "test/archivo_producto.csv";
-        
           try {
-
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
-            
             csvOutput.write("Nombre");
             csvOutput.write("Stock");
             csvOutput.write("Precio");
             csvOutput.write("Descuento");
             csvOutput.write("Codigo");
             csvOutput.endRecord();
-
-        
-        
-        csvOutput.close();
-
+            csvOutput.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        
-        
     }
     
     
     public static void inicializarTodo(){
         
         String outputFile = "test/archivo_producto.csv";
-        String outputFile2 = "test/archivo_tarjeta.csv";
+        String outputFileTarj = "test/archivo_tarjeta.csv";
+        String outputFileHist = "test/archivo_historial_producto.csv";
         boolean existeArchProductos= new File(outputFile).exists();
-        boolean existeArchTarjetas = new File(outputFile2).exists();
-        if(existeArchProductos){
+        boolean existeArchTarjetas = new File(outputFileTarj).exists();
+        boolean existeArchHistorial = new File(outputFileHist).exists();
+        if(existeArchProductos){ //inicializa productos
             File ficheroProducto = new File(outputFile);
         }
         else{
             inicializarProducto(); 
         }
-        if(existeArchTarjetas){
-            File ficheroTarjeta = new File(outputFile2);
+        if(existeArchTarjetas){ //inicializa tarjetas
+            File ficheroTarjeta = new File(outputFileTarj);
         }       
         else{
             inicializarTarjeta();
+        }
+        if(existeArchHistorial){ //inicializa historial
+            File ficheroHistorial= new File(outputFileHist);
+        }       
+        else{
+            inicializarHistorialProducto();
         }
     }
     
@@ -94,14 +104,9 @@ public  class Archivo {
     
     
     public static void nuevoProducto(Producto nuevoProducto){
-        
         String outputFile = "test/archivo_producto.csv";
-        
         try {
-
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
-            
-    
             csvOutput.write(nuevoProducto.getNombre());
             csvOutput.write(Integer.toString(nuevoProducto.getStock()));
             csvOutput.write(Integer.toString(nuevoProducto.getPrecio()));
@@ -118,29 +123,35 @@ public  class Archivo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
     
     
     public static void nuevaTarjeta(Tarjeta nuevaTarjeta){
-        
         String outputFile = "test/archivo_tarjeta.csv";
-        
         try {
-
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
-            
-
             csvOutput.write(nuevaTarjeta.getCodigo());
             csvOutput.write(Integer.toString(nuevaTarjeta.getPuntos()));
             csvOutput.endRecord();                   
-            
             csvOutput.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+    }
+    
+    public static void nuevoPrecioHistorial(HistorialPrecio nuevaPrecio){
+        String outputFile = "test/archivo_historial_producto.csv";
+        try {
+            CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
+            csvOutput.write(nuevaPrecio.getId());
+            csvOutput.write(nuevaPrecio.getPrecio());
+            csvOutput.write(nuevaPrecio.getFecha());
+            csvOutput.write(nuevaPrecio.getEstado());
+            csvOutput.endRecord();                   
+            csvOutput.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     

@@ -1,6 +1,7 @@
 
 package Interfaces;
 
+import Entidades.HistorialPrecio;
 import Entidades.Producto;
 import Seguridad.Archivo;
 import com.csvreader.CsvReader;
@@ -16,13 +17,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Caffia
  */
 public class SubMenuProducto extends javax.swing.JDialog {
-
-    /**
-     * Creates new form SubMenuProducto
-     */
+    
+    private boolean edit;
+    private Integer valueChange;
+    
+    
     public SubMenuProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        edit = true;
+        valueChange = 0;
         getContentPane().setBackground(Color.DARK_GRAY);
         cargarTabla();
         
@@ -41,7 +45,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
             tablaProducto.setModel(modelo);
         }
     }
-
      
      
      private void agregarTabla(Producto nuevoProducto){
@@ -133,10 +136,15 @@ public class SubMenuProducto extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "DESCRIPCION", "STOCK", "PRECIO UNITARIO"
+                "ID", "CODIGO", "STOCK", "PRECIO UNITARIO"
             }
         ));
         tablaProducto.setPreferredSize(new java.awt.Dimension(300, 300));
+        tablaProducto.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                valueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaProducto);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 440, 240));
@@ -195,7 +203,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
         int precio = Integer.parseInt(barraPrecio.getText());
         try {
             CsvReader producto_import = new CsvReader("test/archivo_producto.csv");     
-           
             while (producto_import.readRecord()){
                 codigo ++;
             }
@@ -247,9 +254,10 @@ public class SubMenuProducto extends javax.swing.JDialog {
             Seguridad.Archivo.nuevoProducto(nuevos);
         }
     }
-
+        
     private void botonModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProductoActionPerformed
         actualizarArchivo();
+        botonModificarProducto.setEnabled(false);
     }//GEN-LAST:event_botonModificarProductoActionPerformed
 
     private void botonQuitarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonQuitarProductoActionPerformed
@@ -258,8 +266,28 @@ public class SubMenuProducto extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel)tablaProducto.getModel();
         modelo.removeRow(row);
         actualizarArchivo();
-        
     }//GEN-LAST:event_botonQuitarProductoActionPerformed
+
+    private void valueChanged(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_valueChanged
+        int columna = tablaProducto.getSelectedColumn();
+        int fila = tablaProducto.getSelectedRow();
+        if(edit){
+            if(columna != 0){
+                if(columna == 3){
+                    System.out.println( "modifique algo 2:"+ columna + "fila: "+ fila);
+                    Seguridad.Archivo.nuevoPrecioHistorial(new HistorialPrecio(tablaProducto.getValueAt(fila, 0).toString() , 1.2 ));
+                }
+            }
+            else{
+                valueChange = Integer.parseInt(tablaProducto.getValueAt(fila, columna).toString());
+                edit = false;
+            }
+        }
+        else{
+            //tablaProducto.setValueAt( valueChange, fila, columna);
+            edit = true;
+        }
+    }//GEN-LAST:event_valueChanged
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
