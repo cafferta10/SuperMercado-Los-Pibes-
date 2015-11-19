@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
-import java.lang.Integer;
 
 
 import com.csvreader.CsvWriter;
@@ -76,19 +74,20 @@ public  class Archivo {
         
         String outputFile = "test/archivo_producto.csv";
         String outputFile2 = "test/archivo_tarjeta.csv";
-        boolean alreadyExists = new File(outputFile).exists();
-        
-        if(alreadyExists){
+        boolean existeArchProductos= new File(outputFile).exists();
+        boolean existeArchTarjetas = new File(outputFile2).exists();
+        if(existeArchProductos){
             File ficheroProducto = new File(outputFile);
-            File ficheroTarjeta = new File(outputFile2);
-
         }
         else{
-        inicializarTarjeta();
-        inicializarProducto(); 
+            inicializarProducto(); 
         }
-        
-
+        if(existeArchTarjetas){
+            File ficheroTarjeta = new File(outputFile2);
+        }       
+        else{
+            inicializarTarjeta();
+        }
     }
     
     
@@ -150,9 +149,6 @@ public  class Archivo {
         ArrayList<Tarjeta> listaTarjeta = new ArrayList<Tarjeta>();
         
         try {
-			
-		
-			
 		CsvReader tarjeta_import = new CsvReader("test/archivo_tarjeta.csv");
 		tarjeta_import.readHeaders();
 
@@ -164,9 +160,7 @@ public  class Archivo {
 			listaTarjeta.add(new Tarjeta(codigo, puntos));				
 		}
 			
-		tarjeta_import.close();
-			
-			
+		tarjeta_import.close();	
 	} 
         catch (FileNotFoundException e) {
 		e.printStackTrace();
@@ -174,7 +168,6 @@ public  class Archivo {
         catch (IOException e) {
 		e.printStackTrace();
 		}
-        
         return  listaTarjeta;
     } 
     

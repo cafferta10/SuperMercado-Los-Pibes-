@@ -76,7 +76,8 @@ public class SubMenuProducto extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
-        setPreferredSize(new java.awt.Dimension(500, 600));
+        setMinimumSize(new java.awt.Dimension(500, 500));
+        setPreferredSize(new java.awt.Dimension(500, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonAgregarProducto.setBackground(new java.awt.Color(102, 102, 102));
@@ -91,7 +92,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonAgregarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 220, 40));
+        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 220, 20));
 
         botonModificarProducto.setBackground(new java.awt.Color(102, 102, 102));
         botonModificarProducto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -102,7 +103,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonModificarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonModificarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 440, 30));
+        getContentPane().add(botonModificarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 440, 20));
 
         botonQuitarProducto.setBackground(new java.awt.Color(102, 102, 102));
         botonQuitarProducto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -116,13 +117,13 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonQuitarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonQuitarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 210, 40));
+        getContentPane().add(botonQuitarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 210, 20));
 
         tituloPrincipal.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         tituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         tituloPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tituloPrincipal.setText("PRODUCTOS");
-        getContentPane().add(tituloPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, -1));
+        getContentPane().add(tituloPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, -1));
 
         tablaProducto.setBackground(new java.awt.Color(0, 0, 0));
         tablaProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -138,7 +139,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
         tablaProducto.setPreferredSize(new java.awt.Dimension(300, 300));
         jScrollPane1.setViewportView(tablaProducto);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 440, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 440, 240));
 
         barraDescripcion.setBackground(new java.awt.Color(0, 0, 0));
         barraDescripcion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -149,13 +150,13 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 barraDescripcionActionPerformed(evt);
             }
         });
-        getContentPane().add(barraDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 340, 30));
+        getContentPane().add(barraDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 340, 30));
 
         barraStock.setBackground(new java.awt.Color(0, 0, 0));
         barraStock.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         barraStock.setForeground(new java.awt.Color(255, 255, 255));
         barraStock.setCaretColor(new java.awt.Color(255, 255, 255));
-        getContentPane().add(barraStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 340, 30));
+        getContentPane().add(barraStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, 30));
 
         barraPrecio.setBackground(new java.awt.Color(0, 0, 0));
         barraPrecio.setForeground(new java.awt.Color(255, 255, 255));
@@ -166,22 +167,22 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 barraPrecioActionPerformed(evt);
             }
         });
-        getContentPane().add(barraPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 340, 30));
+        getContentPane().add(barraPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 340, 30));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("DESCRIPCION");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 100, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 100, 30));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("PRECIO");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 80, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("STOCK");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 80, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
