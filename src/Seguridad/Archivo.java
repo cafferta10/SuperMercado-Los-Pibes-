@@ -15,7 +15,14 @@ import com.csvreader.CsvReader;
 
 import Entidades.Producto;
 import Entidades.Tarjeta;
+import java.util.Date;
+import java.util.List;
 
+/**
+ * 
+ * @author Alan
+ * @author Caffia
+ */
 
 public  class Archivo {
     
@@ -43,7 +50,7 @@ public  class Archivo {
         try {
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
             csvOutput.write("ID");
-            csvOutput.write("PRERCIO");
+            csvOutput.write("PRECIO");
             csvOutput.write("FECHA");
             csvOutput.write("ESTADO");
             csvOutput.endRecord();
@@ -109,7 +116,7 @@ public  class Archivo {
             CsvWriter csvOutput = new CsvWriter(new FileWriter(outputFile, true), ',');
             csvOutput.write(nuevoProducto.getNombre());
             csvOutput.write(Integer.toString(nuevoProducto.getStock()));
-            csvOutput.write(Integer.toString(nuevoProducto.getPrecio()));
+            csvOutput.write( nuevoProducto.getPrecio().toString() );
             if (nuevoProducto.getDescuento())
                 csvOutput.write("SI");
             else
@@ -185,13 +192,8 @@ public  class Archivo {
     
     
     public static ArrayList listaProducto(){
-        
         ArrayList<Producto> listaProducto = new ArrayList<Producto>();
-        
-        try {
-			
-		
-			
+        try {	
 		CsvReader producto_import = new CsvReader("test/archivo_producto.csv");
 		producto_import.readHeaders();
 
@@ -199,7 +201,7 @@ public  class Archivo {
 		{
                     String descripcion = producto_import.get("Nombre");
                     int stock = Integer.parseInt(producto_import.get("Stock"));
-                    int precio = Integer.parseInt(producto_import.get("Precio"));
+                    Double precio = Double.parseDouble(producto_import.get("Precio"));
                     boolean descuento = false;
                     if ("SI".equals(producto_import.get("Descuento"))){                  
                         descuento = true; 
@@ -219,13 +221,39 @@ public  class Archivo {
         catch (IOException e) {
 		e.printStackTrace();
 		}
-        
         return listaProducto;
-        
-        
     }
     
     
+    public static List listaHistorial(String clave){
+        List<HistorialPrecio> listaHistorial = new ArrayList<HistorialPrecio>();
+        try {
+            CsvReader historial_import = new CsvReader("test/archivo_historial_producto.csv");
+            historial_import.readHeaders();
+            while (historial_import.readRecord())
+            {
+                System.out.println("cargo");
+                String ID = historial_import.get("ID");
+                if (clave.equals(ID)){
+                    Double precio = Double.parseDouble(historial_import.get("PRECIO"));
+                    Date fecha = new Date(historial_import.get("FECHA"));
+                    listaHistorial.add(new HistorialPrecio(ID, precio, fecha,true));
+                }
+            }	
+            historial_import.close();		
+	} 
+        catch (FileNotFoundException e) {
+		e.printStackTrace();
+		} 
+        catch (IOException e) {
+		e.printStackTrace();
+		}
+        return  listaHistorial;
+    }
+
+    public static ArrayList<Producto> listaHistorial() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     public Producto busquedaProducto(int codigoBuscado){
@@ -241,7 +269,7 @@ public  class Archivo {
                     
                     String descripcion = producto_import.get("Nombre");
                     int stock = Integer.parseInt(producto_import.get("Stock"));
-                    int precio = Integer.parseInt(producto_import.get("Precio"));
+                    Double precio = Double.parseDouble(producto_import.get("Precio"));
                     boolean descuento = false;
                     if ("SI".equals(producto_import.get("Descuento"))){                  
                         descuento = true; 

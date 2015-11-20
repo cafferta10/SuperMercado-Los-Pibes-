@@ -1,12 +1,17 @@
 
 package Entidades;
 
+/**
+ * 
+ * @author Alan
+ * @author Caffia
+ */
 
 public class Producto {
     
     private String nombre;
     private int stock;
-    private int precio;
+    private Double precio;
     private boolean descuento;
     private int codigo;
 	
@@ -30,12 +35,12 @@ public class Producto {
 	}
         
         
-    public int getPrecio() {
+    public Double getPrecio() {
 	return precio;
 	}
         
-        
-    public void setPrecio(int precio) {
+
+    public void setPrecio(Double precio) {
 	this.precio = precio;
 	}
         
@@ -62,14 +67,12 @@ public class Producto {
 	}
         
         
-    public Producto(String nombre, int stock, int precio, boolean descuento,int codigo) {
+    public Producto(String nombre, int stock, Double precio, boolean descuento,int codigo) {
 	super();
 	this.nombre = nombre;
 	this.stock = stock;
 	this.precio = precio;
 	this.descuento = descuento;
         this.codigo = codigo;
-	}
-	
-    
+    }
 }

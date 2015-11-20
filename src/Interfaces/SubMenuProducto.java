@@ -10,23 +10,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * 
+ * @author Alan
  * @author Caffia
  */
 public class SubMenuProducto extends javax.swing.JDialog {
     
-    private boolean edit;
-    private Integer valueChange;
+    private Map<String , Double> historialProd = new HashMap<String, Double>();
     
     
     public SubMenuProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        edit = true;
-        valueChange = 0;
         getContentPane().setBackground(Color.DARK_GRAY);
         cargarTabla();
         
@@ -40,7 +40,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
             arreglo[0] = Integer.toString(datoProducto.getCodigo());
             arreglo[1] = datoProducto.getNombre();
             arreglo[2] = Integer.toString(datoProducto.getStock());
-            arreglo[3] =Integer.toString(datoProducto.getPrecio());
+            arreglo[3] = datoProducto.getPrecio().toString();
             modelo.addRow(arreglo);
             tablaProducto.setModel(modelo);
         }
@@ -54,7 +54,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
         arreglo[0] = Integer.toString(nuevoProducto.getCodigo());
         arreglo[1] = nuevoProducto.getNombre();
         arreglo[2] = Integer.toString(nuevoProducto.getStock());
-        arreglo[3] =Integer.toString(nuevoProducto.getPrecio());
+        arreglo[3] = nuevoProducto.getPrecio().toString();
         modelo.addRow(arreglo);
         tablaProducto.setModel(modelo);
         
@@ -76,6 +76,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        botonModificarProducto1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -106,7 +107,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonModificarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonModificarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 440, 20));
+        getContentPane().add(botonModificarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 170, 20));
 
         botonQuitarProducto.setBackground(new java.awt.Color(102, 102, 102));
         botonQuitarProducto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -138,7 +139,15 @@ public class SubMenuProducto extends javax.swing.JDialog {
             new String [] {
                 "ID", "CODIGO", "STOCK", "PRECIO UNITARIO"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaProducto.setPreferredSize(new java.awt.Dimension(300, 300));
         tablaProducto.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -192,6 +201,18 @@ public class SubMenuProducto extends javax.swing.JDialog {
         jLabel4.setText("STOCK");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, 30));
 
+        botonModificarProducto1.setBackground(new java.awt.Color(102, 102, 102));
+        botonModificarProducto1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        botonModificarProducto1.setForeground(new java.awt.Color(255, 255, 255));
+        botonModificarProducto1.setText("HISTORIAL");
+        botonModificarProducto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarProducto1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonModificarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 180, 20));
+        botonModificarProducto1.getAccessibleContext().setAccessibleName("historial");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -200,7 +221,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
         int codigo = 0;
         String nombre = barraDescripcion.getText();
         int Stock = Integer.parseInt(barraStock.getText());
-        int precio = Integer.parseInt(barraPrecio.getText());
+        Double precio = Double.parseDouble(barraPrecio.getText());
         try {
             CsvReader producto_import = new CsvReader("test/archivo_producto.csv");     
             while (producto_import.readRecord()){
@@ -226,7 +247,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
     
     private void botonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarProductoActionPerformed
         agregar();
-        
     }//GEN-LAST:event_botonAgregarProductoActionPerformed
 
     private void barraPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraPrecioActionPerformed
@@ -248,16 +268,20 @@ public class SubMenuProducto extends javax.swing.JDialog {
         for (int  x  = 0 ; x < vueltas; x++){
             String nombre = tablaProducto.getValueAt(x, 1).toString();
             int stock = Integer.parseInt(tablaProducto.getValueAt(x, 2).toString());
-            int precio = Integer.parseInt(tablaProducto.getValueAt(x, 3).toString());
+            Double precio = Double.parseDouble(tablaProducto.getValueAt(x, 3).toString());
             int codigo = Integer.parseInt(tablaProducto.getValueAt(x, 0).toString());
             Producto nuevos = new Producto(nombre,stock,precio,false,codigo);  
             Seguridad.Archivo.nuevoProducto(nuevos);
         }
+        for( String key : historialProd.keySet()){
+            Seguridad.Archivo.nuevoPrecioHistorial(new HistorialPrecio(key, historialProd.get(key)));
+        }
+        historialProd.clear();
     }
         
     private void botonModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProductoActionPerformed
         actualizarArchivo();
-        botonModificarProducto.setEnabled(false);
+        //botonModificarProducto.setEnabled(false);
     }//GEN-LAST:event_botonModificarProductoActionPerformed
 
     private void botonQuitarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonQuitarProductoActionPerformed
@@ -271,23 +295,16 @@ public class SubMenuProducto extends javax.swing.JDialog {
     private void valueChanged(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_valueChanged
         int columna = tablaProducto.getSelectedColumn();
         int fila = tablaProducto.getSelectedRow();
-        if(edit){
-            if(columna != 0){
-                if(columna == 3){
-                    System.out.println( "modifique algo 2:"+ columna + "fila: "+ fila);
-                    Seguridad.Archivo.nuevoPrecioHistorial(new HistorialPrecio(tablaProducto.getValueAt(fila, 0).toString() , 1.2 ));
-                }
-            }
-            else{
-                valueChange = Integer.parseInt(tablaProducto.getValueAt(fila, columna).toString());
-                edit = false;
-            }
-        }
-        else{
-            //tablaProducto.setValueAt( valueChange, fila, columna);
-            edit = true;
+        if(columna == 3){
+            historialProd.put(tablaProducto.getValueAt(fila, 0).toString(), Double.parseDouble(tablaProducto.getValueAt(fila, 3).toString()));
         }
     }//GEN-LAST:event_valueChanged
+
+    private void botonModificarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProducto1ActionPerformed
+        String key = tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 0).toString();
+        Historial verHistorial = new Historial(new javax.swing.JDialog(), true , key);
+        verHistorial.setVisible(true);
+    }//GEN-LAST:event_botonModificarProducto1ActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -296,6 +313,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
     private javax.swing.JTextField barraStock;
     private javax.swing.JButton botonAgregarProducto;
     private javax.swing.JButton botonModificarProducto;
+    private javax.swing.JButton botonModificarProducto1;
     private javax.swing.JButton botonQuitarProducto;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

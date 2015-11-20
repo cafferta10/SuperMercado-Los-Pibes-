@@ -5,8 +5,9 @@ import java.awt.Color;
 
 
 /**
- *
- * @author Franco
+ * 
+ * @author Alan
+ * @author Caffia
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 

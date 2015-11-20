@@ -1,6 +1,11 @@
 package Entidades;
 
 import java.util.Date;
+/**
+ * 
+ * @author Alan
+ * @author Caffia
+ */
 
 public class HistorialPrecio {
     
@@ -38,7 +43,7 @@ public class HistorialPrecio {
     }
     
     public String getFecha(){
-        return this.fecha.toString();
+        return this.fecha.toLocaleString();
     }
     
     public String getEstado(){
