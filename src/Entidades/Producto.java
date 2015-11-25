@@ -12,7 +12,6 @@ public class Producto {
     private String nombre;
     private int stock;
     private Double precio;
-    private boolean descuento;
     private int codigo;
 	
     public String getNombre() {
@@ -47,16 +46,7 @@ public class Producto {
         
 	
 	
-    public boolean getDescuento() {
-	return descuento;
-	}
-    
-    
-    public void setDescuento(boolean descuento) {
-	this.descuento = descuento;
-	}
-    
-    
+
     public int getCodigo() {
 	return codigo;
 	}
@@ -67,12 +57,11 @@ public class Producto {
 	}
         
         
-    public Producto(String nombre, int stock, Double precio, boolean descuento,int codigo) {
+    public Producto(String nombre, int stock, Double precio,int codigo) {
 	super();
 	this.nombre = nombre;
 	this.stock = stock;
 	this.precio = precio;
-	this.descuento = descuento;
         this.codigo = codigo;
     }
 }

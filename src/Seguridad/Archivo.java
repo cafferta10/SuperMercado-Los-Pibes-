@@ -1,13 +1,14 @@
 
 package Seguridad;
 
-import Entidades.HistorialPrecio;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
+import java.util.Date;
+import java.util.List;
 
 import com.csvreader.CsvWriter;
 import com.csvreader.CsvReader;
@@ -15,8 +16,8 @@ import com.csvreader.CsvReader;
 
 import Entidades.Producto;
 import Entidades.Tarjeta;
-import java.util.Date;
-import java.util.List;
+import Entidades.HistorialPrecio;
+import Interfaces.Error;
 
 /**
  * 
@@ -69,7 +70,6 @@ public  class Archivo {
             csvOutput.write("Nombre");
             csvOutput.write("Stock");
             csvOutput.write("Precio");
-            csvOutput.write("Descuento");
             csvOutput.write("Codigo");
             csvOutput.endRecord();
             csvOutput.close();
@@ -117,10 +117,6 @@ public  class Archivo {
             csvOutput.write(nuevoProducto.getNombre());
             csvOutput.write(Integer.toString(nuevoProducto.getStock()));
             csvOutput.write( nuevoProducto.getPrecio().toString() );
-            if (nuevoProducto.getDescuento())
-                csvOutput.write("SI");
-            else
-                csvOutput.write("NO");
             csvOutput.write(Integer.toString(nuevoProducto.getCodigo()));
             csvOutput.endRecord();                   
             
@@ -202,13 +198,9 @@ public  class Archivo {
                     String descripcion = producto_import.get("Nombre");
                     int stock = Integer.parseInt(producto_import.get("Stock"));
                     Double precio = Double.parseDouble(producto_import.get("Precio"));
-                    boolean descuento = false;
-                    if ("SI".equals(producto_import.get("Descuento"))){                  
-                        descuento = true; 
-                       }
                     int codigo = Integer.parseInt(producto_import.get("Codigo"));
                                         
-                    listaProducto.add(new Producto(descripcion, stock, precio,descuento,codigo));				
+                    listaProducto.add(new Producto(descripcion, stock, precio,codigo));				
 		}
 			
 		producto_import.close();
@@ -256,8 +248,10 @@ public  class Archivo {
     }
     
     
-    public Producto busquedaProducto(int codigoBuscado){
+    public static Producto ventaProducto(int codigoBuscado, int cantidadVendida){
         
+        Producto productoEncontrado = null;
+        String campos = "";
         try {
             
             CsvReader producto_import = new CsvReader("test/archivo_producto.csv");
@@ -265,27 +259,24 @@ public  class Archivo {
             
             while (producto_import.readRecord()){
                 
-                if (codigoBuscado == Integer.parseInt(producto_import.get("Codigo"))){
-                    
-                    String descripcion = producto_import.get("Nombre");
+                if (producto_import.get("Codigo").equals(Integer.toString(codigoBuscado))){
                     int stock = Integer.parseInt(producto_import.get("Stock"));
-                    Double precio = Double.parseDouble(producto_import.get("Precio"));
-                    boolean descuento = false;
-                    if ("SI".equals(producto_import.get("Descuento"))){                  
-                        descuento = true; 
-                       }                   
-                    int codigo = Integer.parseInt(producto_import.get("Codigo"));
+                    if ( cantidadVendida <= stock ){
+
+                        String descripcion = producto_import.get("Nombre");
+                        Double precio = Double.parseDouble(producto_import.get("Precio"));                
+                        int codigo = Integer.parseInt(producto_import.get("Codigo"));
                     
-                    return new Producto(descripcion, stock, precio,descuento,codigo);
+                        productoEncontrado = new Producto(descripcion, stock, precio,codigo);
+                    }
+                    else{
+                       campos = "la cantidad a comprar de "+ producto_import.get("Nombre")+" supera el stock";
+              
+                        
+                    }
+                    
                 }
-                else{
-                    return null;
-                }
-                
-                
             }
-                       
-            
         }
         
         catch (FileNotFoundException e) {
@@ -295,7 +286,13 @@ public  class Archivo {
 		e.printStackTrace();
 		}
         
-        return null;
+        
+        if (campos != ""){
+            Error nuevoError = new Error (new javax.swing.JDialog(),campos);
+            nuevoError.setVisible(true);
+        }
+        
+        return productoEncontrado;
     }
     
 

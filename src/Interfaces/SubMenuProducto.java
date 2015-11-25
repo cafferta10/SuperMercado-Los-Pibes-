@@ -228,7 +228,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 codigo ++;
             }
             producto_import.close();
-        Producto nuevoProducto = new Producto (nombre,Stock,precio,false,codigo);
+        Producto nuevoProducto = new Producto (nombre,Stock,precio,codigo);
         Archivo.nuevoProducto(nuevoProducto);
         agregarTabla( nuevoProducto);
         barraDescripcion.setText("");
@@ -270,7 +270,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
             int stock = Integer.parseInt(tablaProducto.getValueAt(x, 2).toString());
             Double precio = Double.parseDouble(tablaProducto.getValueAt(x, 3).toString());
             int codigo = Integer.parseInt(tablaProducto.getValueAt(x, 0).toString());
-            Producto nuevos = new Producto(nombre,stock,precio,false,codigo);  
+            Producto nuevos = new Producto(nombre,stock,precio,codigo);  
             Seguridad.Archivo.nuevoProducto(nuevos);
         }
         for( String key : historialProd.keySet()){

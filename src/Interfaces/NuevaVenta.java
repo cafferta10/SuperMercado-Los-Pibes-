@@ -3,6 +3,9 @@ package Interfaces;
 
 import java.awt.Color;
 
+import Entidades.Producto;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Caffia
@@ -29,10 +32,13 @@ public class NuevaVenta extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaVenta = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
+        finalizarVenta = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        barraCantidad = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
-        setPreferredSize(new java.awt.Dimension(500, 400));
+        setPreferredSize(new java.awt.Dimension(500, 491));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         barraCodigoProducto.setBackground(new java.awt.Color(0, 0, 0));
@@ -54,32 +60,13 @@ public class NuevaVenta extends javax.swing.JDialog {
                 botonAgregarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, 30));
+        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, 30));
 
         tablaVenta.setBackground(new java.awt.Color(0, 0, 0));
         tablaVenta.setForeground(new java.awt.Color(255, 255, 255));
         tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"
@@ -88,7 +75,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         tablaVenta.setPreferredSize(new java.awt.Dimension(300, 398));
         jScrollPane1.setViewportView(tablaVenta);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 470, 230));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 470, 230));
 
         jLabel3.setBackground(new java.awt.Color(51, 51, 51));
         jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -97,18 +84,77 @@ public class NuevaVenta extends javax.swing.JDialog {
         jLabel3.setText("NUEVA VENTA");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, 30));
 
+        finalizarVenta.setBackground(new java.awt.Color(102, 102, 102));
+        finalizarVenta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        finalizarVenta.setForeground(new java.awt.Color(255, 255, 255));
+        finalizarVenta.setText("TERMINAR VENTA");
+        finalizarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finalizarVentaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(finalizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 270, -1));
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("CANTIDAD");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 160, -1));
+
+        barraCantidad.setBackground(new java.awt.Color(0, 0, 0));
+        barraCantidad.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        barraCantidad.setForeground(new java.awt.Color(255, 255, 255));
+        barraCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barraCantidadActionPerformed(evt);
+            }
+        });
+        getContentPane().add(barraCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 200, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarProductoActionPerformed
-        // TODO add your handling code here:
+
+        int codigoBuscado = 0;
+        int cantidadVendida = 0;
+        codigoBuscado = Integer.parseInt(barraCodigoProducto.getText());
+        cantidadVendida = Integer.parseInt(barraCantidad.getText());
+        Producto nuevoProducto = Seguridad.Archivo.ventaProducto(codigoBuscado,cantidadVendida);
+        
+        if (nuevoProducto != null){
+            DefaultTableModel modelo=(DefaultTableModel) tablaVenta.getModel();    
+            String arreglo [] = new String[4];
+    
+            arreglo[0] = nuevoProducto.getNombre();
+            arreglo[1] = barraCantidad.getText();
+            arreglo[2] = Double.toString(nuevoProducto.getPrecio());
+            arreglo[3] = Double.toString(nuevoProducto.getPrecio() * Integer.parseInt(barraCantidad.getText()));
+            modelo.addRow(arreglo);
+            tablaVenta.setModel(modelo);
+            barraCodigoProducto.setText("");
+            barraCantidad.setText("");
+        
+        
+    }
+        
     }//GEN-LAST:event_botonAgregarProductoActionPerformed
+
+    private void finalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_finalizarVentaActionPerformed
+
+    private void barraCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_barraCantidadActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField barraCantidad;
     private javax.swing.JTextField barraCodigoProducto;
     private javax.swing.JButton botonAgregarProducto;
+    private javax.swing.JButton finalizarVenta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaVenta;
