@@ -6,6 +6,7 @@
 package Interfaces;
 
 import Entidades.HistorialPrecio;
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Historial extends javax.swing.JDialog {
     public Historial(java.awt.Dialog parent, boolean modal, String clave) {
         super(parent, modal);
         initComponents();
+        getContentPane().setBackground(Color.DARK_GRAY);
         cargarTabla(clave);
     }
     /**
@@ -46,6 +48,9 @@ public class Historial extends javax.swing.JDialog {
         setPreferredSize(new java.awt.Dimension(500, 350));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable1.setAutoCreateRowSorter(true);
+        jTable1.setBackground(new java.awt.Color(0, 0, 0));
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -59,6 +64,8 @@ public class Historial extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 470, 260));
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("VOLVER");
         jButton1.setMaximumSize(new java.awt.Dimension(500, 500));
         jButton1.setMinimumSize(new java.awt.Dimension(500, 500));

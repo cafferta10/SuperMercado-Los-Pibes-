@@ -40,7 +40,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
                 nuevaVentaActionPerformed(evt);
             }
         });
-        getContentPane().add(nuevaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 270, -1));
+        getContentPane().add(nuevaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 470, -1));
 
         tablaVenta.setBackground(new java.awt.Color(0, 0, 0));
         tablaVenta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -75,7 +75,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
         tablaVenta.setPreferredSize(new java.awt.Dimension(375, 398));
         jScrollPane1.setViewportView(tablaVenta);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 470, 250));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 470, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

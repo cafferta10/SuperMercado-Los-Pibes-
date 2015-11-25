@@ -53,7 +53,6 @@ public  class Archivo {
             csvOutput.write("ID");
             csvOutput.write("PRECIO");
             csvOutput.write("FECHA");
-            csvOutput.write("ESTADO");
             csvOutput.endRecord();
             csvOutput.close();
         } catch (IOException e) {
@@ -149,7 +148,6 @@ public  class Archivo {
             csvOutput.write(nuevaPrecio.getId());
             csvOutput.write(nuevaPrecio.getPrecio());
             csvOutput.write(nuevaPrecio.getFecha());
-            csvOutput.write(nuevaPrecio.getEstado());
             csvOutput.endRecord();                   
             csvOutput.close();
         } catch (IOException e) {
@@ -224,12 +222,11 @@ public  class Archivo {
             historial_import.readHeaders();
             while (historial_import.readRecord())
             {
-                System.out.println("cargo");
                 String ID = historial_import.get("ID");
                 if (clave.equals(ID)){
                     Double precio = Double.parseDouble(historial_import.get("PRECIO"));
                     Date fecha = new Date(historial_import.get("FECHA"));
-                    listaHistorial.add(new HistorialPrecio(ID, precio, fecha,true));
+                    listaHistorial.add(new HistorialPrecio(ID, precio, fecha));
                 }
             }	
             historial_import.close();		

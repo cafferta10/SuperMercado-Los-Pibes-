@@ -12,14 +12,12 @@ public class HistorialPrecio {
     private double precio;
     private String id;
     private Date fecha;
-    private boolean estado;
     
-    public HistorialPrecio(String id , double  precio , Date fecha ,boolean estado){
+    public HistorialPrecio(String id , double  precio , Date fecha ){
         super();
         this.precio = precio;
         this.id = id;
         this.fecha = fecha;
-        this.estado = estado;
     }
     
     public HistorialPrecio(String id , double  precio){
@@ -27,11 +25,6 @@ public class HistorialPrecio {
         this.precio = precio;
         this.id = id;
         this.fecha = new Date();
-        this.estado = true;
-    }
-    
-    public void CambiarEstado(){
-        this.estado = false;
     }
     
     public String getId(){
@@ -44,14 +37,5 @@ public class HistorialPrecio {
     
     public String getFecha(){
         return this.fecha.toLocaleString();
-    }
-    
-    public String getEstado(){
-        if(this.estado){
-            return "true"; 
-        }
-        else{
-            return "false";
-        }
     }
 }
