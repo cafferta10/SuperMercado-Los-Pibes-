@@ -1,4 +1,8 @@
 Nombre,Stock,Precio,Codigo
-alan,2,39991.501,1
-121,12,1.506,2
-3,3,3.4,3
+Dulce de leche,2,12.9,1
+leche Cotagu,12,8.5,2
+mermelada,9811,40.0,3
+coca cola,33,45.0,4
+fernet,32,80.0,5
+coca,3,23.0,6
+pepsi,0,100.0,7

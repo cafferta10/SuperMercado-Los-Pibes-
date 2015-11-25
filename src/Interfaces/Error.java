@@ -5,7 +5,7 @@ package Interfaces;
 public class Error extends javax.swing.JPanel {
 
 
-    public Error(java.awt.Dialog parent,String camposError ) {
+    public Error(java.awt.Dialog parent,boolean modal,String camposError ) {
         initComponents();
         informacionError.setText(camposError);
     }

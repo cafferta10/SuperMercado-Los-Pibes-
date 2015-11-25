@@ -285,7 +285,7 @@ public  class Archivo {
         
         
         if (campos != ""){
-            Error nuevoError = new Error (new javax.swing.JDialog(),campos);
+            Error nuevoError = new Error (new javax.swing.JDialog(),true,campos);
             nuevoError.setVisible(true);
         }
         

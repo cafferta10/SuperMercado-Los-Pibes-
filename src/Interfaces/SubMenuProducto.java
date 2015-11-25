@@ -96,7 +96,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonAgregarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 220, 20));
+        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 210, 20));
 
         botonModificarProducto.setBackground(new java.awt.Color(102, 102, 102));
         botonModificarProducto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -107,12 +107,12 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonModificarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonModificarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 170, 20));
+        getContentPane().add(botonModificarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 220, 20));
 
         botonQuitarProducto.setBackground(new java.awt.Color(102, 102, 102));
         botonQuitarProducto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         botonQuitarProducto.setForeground(new java.awt.Color(255, 255, 255));
-        botonQuitarProducto.setText("QUITAR");
+        botonQuitarProducto.setText("ELIMINAR");
         botonQuitarProducto.setMaximumSize(new java.awt.Dimension(110, 27));
         botonQuitarProducto.setMinimumSize(new java.awt.Dimension(110, 27));
         botonQuitarProducto.setPreferredSize(new java.awt.Dimension(110, 27));
@@ -121,7 +121,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonQuitarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonQuitarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 210, 20));
+        getContentPane().add(botonQuitarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 220, 20));
 
         tituloPrincipal.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         tituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
@@ -210,7 +210,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonModificarProducto1ActionPerformed(evt);
             }
         });
-        getContentPane().add(botonModificarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 180, 20));
+        getContentPane().add(botonModificarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 210, 20));
         botonModificarProducto1.getAccessibleContext().setAccessibleName("historial");
 
         pack();
