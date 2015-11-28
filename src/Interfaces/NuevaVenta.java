@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Entidades.Linea;
 import Entidades.Producto;
+import Entidades.Tarjeta;
 import Entidades.Venta;
 
 /**
@@ -20,6 +21,7 @@ import Entidades.Venta;
 public class NuevaVenta extends javax.swing.JDialog {
     
     private List <Producto> listaProductos = Seguridad.Archivo.listaProducto();
+    private List <Tarjeta> listaTarjetas = Seguridad.Archivo.listaTarjeta();
     private Linea lineaProductos = new Linea();
     private boolean ventaRealizada = false;
     /**
@@ -34,6 +36,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         getContentPane().setBackground(Color.DARK_GRAY);
         DescuentoBox.removeAllItems();
         cargarBoxProducto();
+        cargarBoxCliente();
         NumeroProductos.setModel(cambiarCantidad(listaProductos.get(0).getStock()));
         precio.setText("c/u $ "+listaProductos.get(0).getPrecio().toString());
         total.setText("0");
@@ -43,6 +46,13 @@ public class NuevaVenta extends javax.swing.JDialog {
         productoBox.removeAllItems();
         for(Producto p : listaProductos ){
             productoBox.addItem(p.getNombre());
+        }
+    }
+    
+    public void cargarBoxCliente(){
+        clientebox.removeAllItems();
+        for(Tarjeta p : listaTarjetas){
+            productoBox.addItem(p.getCodigo());
         }
     }
     
@@ -78,7 +88,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         precio = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        clientebox = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
@@ -171,8 +181,8 @@ public class NuevaVenta extends javax.swing.JDialog {
         jLabel6.setText("PRODUCTO");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 100, -1));
+        clientebox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(clientebox, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 100, -1));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CLIENTE");
@@ -224,15 +234,17 @@ public class NuevaVenta extends javax.swing.JDialog {
     }//GEN-LAST:event_botonAgregarProductoActionPerformed
 
     private void finalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarVentaActionPerformed
-        String outputFile = "test/archivo_producto.csv";
-        File ficheroProducto = new File(outputFile);
-        ficheroProducto.delete();
-        Seguridad.Archivo.inicializarProducto(); 
-        for( Producto key : listaProductos){
-            Seguridad.Archivo.nuevoProducto(key);
-        }
-        setVisible(false);
-        ventaRealizada = true;
+       if (Double.parseDouble(total.getText()) > 0){
+            String outputFile = "test/archivo_producto.csv";
+            File ficheroProducto = new File(outputFile);
+            ficheroProducto.delete();
+            Seguridad.Archivo.inicializarProducto(); 
+            for( Producto key : listaProductos){
+                Seguridad.Archivo.nuevoProducto(key);
+            }
+            setVisible(false);
+            ventaRealizada = true;
+       }
     }//GEN-LAST:event_finalizarVentaActionPerformed
 
     private void productoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productoBoxActionPerformed
@@ -256,8 +268,8 @@ public class NuevaVenta extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> DescuentoBox;
     private javax.swing.JSpinner NumeroProductos;
     private javax.swing.JButton botonAgregarProducto;
+    private javax.swing.JComboBox<String> clientebox;
     private javax.swing.JButton finalizarVenta;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
