@@ -1,7 +1,10 @@
 
 package Interfaces;
 
+import Entidades.Venta;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -10,6 +13,7 @@ import java.awt.Color;
  */
 public class Principal extends javax.swing.JFrame {
 
+    private List <Venta> listaVenta = new ArrayList<Venta>();
     /**
      * Creates new form Principal
      */
@@ -84,7 +88,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuProductoActionPerformed
 
     private void subMenuVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuVentaActionPerformed
-        SubMenuVenta nuevaVenta = new SubMenuVenta(new javax.swing.JFrame(), true);
+        SubMenuVenta nuevaVenta = new SubMenuVenta(new javax.swing.JFrame(), true ,listaVenta);
         nuevaVenta.setVisible(true);
         
     }//GEN-LAST:event_subMenuVentaActionPerformed

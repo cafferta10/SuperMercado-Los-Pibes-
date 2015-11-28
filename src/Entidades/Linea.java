@@ -1,38 +1,26 @@
 
 package Entidades;
 
+import java.util.ArrayList;
+
 
 public class Linea {
     
-    private int cantidad;
-    private Producto producto;
+    private ArrayList <Producto> listaProducto ;
     
     
-    public int getCantidad() {
-		return cantidad;
-	}
-    
-    public void setCantidad(int cantidad) {
-	this.cantidad = cantidad;
+    public ArrayList getListaProducto() {
+	return listaProducto;
 	}
     
     
-    public Producto getProducto() {
-	return producto;
+    public void setListaProducto(Producto producto) {
+	this.listaProducto.add(producto);
 	}
     
     
-    public void setProducto(Producto producto) {
-	this.producto = producto;
-	}
-    
-    
-    public Linea(int cantidad, Producto producto) {
+    public Linea() {
 	super();
-	this.cantidad = cantidad;
-	this.producto = producto;
-	}
-	
-    
-    
+	this.listaProducto = new ArrayList() ;
+	}   
 }

@@ -1,8 +1,8 @@
 Nombre,Stock,Precio,Codigo
-Dulce de leche,2,12.9,1
-leche Cotagu,12,8.5,2
-mermelada,9811,40.0,3
-coca cola,33,45.0,4
-fernet,32,80.0,5
-coca,3,23.0,6
+Dulce de leche,0,12.9,1
+leche Cotagu,9,8.5,2
+mermelada,9807,40.0,3
+coca cola,0,45.0,4
+fernet,18,80.0,5
+coca,0,23.0,6
 pepsi,0,100.0,7

@@ -1,14 +1,17 @@
 
 package Interfaces;
 
-import Entidades.HistorialPrecio;
-import java.awt.Color;
 
-import Entidades.Producto;
+
+import java.awt.Color;
 import java.io.File;
 import java.util.List;
 import javax.swing.SpinnerModel;
 import javax.swing.table.DefaultTableModel;
+
+import Entidades.Linea;
+import Entidades.Producto;
+import Entidades.Venta;
 
 /**
  *
@@ -17,8 +20,13 @@ import javax.swing.table.DefaultTableModel;
 public class NuevaVenta extends javax.swing.JDialog {
     
     private List <Producto> listaProductos = Seguridad.Archivo.listaProducto();
+    private Linea lineaProductos = new Linea();
+    private boolean ventaRealizada = false;
     /**
      * Creates new form NuevaVenta
+     * @param parent
+     * @param modal
+     * @param nuevaVenta
      */
     public NuevaVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,6 +46,13 @@ public class NuevaVenta extends javax.swing.JDialog {
         }
     }
     
+    public Linea getLineaVenta(){
+        return lineaProductos;
+    }
+    
+    public Double getTotal(){
+        return Double.parseDouble(total.getText().toString());
+    }
     
     
     public SpinnerModel cambiarCantidad(int max){
@@ -67,6 +82,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
+        Cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -120,7 +136,7 @@ public class NuevaVenta extends javax.swing.JDialog {
                 finalizarVentaActionPerformed(evt);
             }
         });
-        getContentPane().add(finalizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 470, -1));
+        getContentPane().add(finalizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 230, -1));
 
         NumeroProductos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
         getContentPane().add(NumeroProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 70, 20));
@@ -160,7 +176,7 @@ public class NuevaVenta extends javax.swing.JDialog {
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CLIENTE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, 20));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 50, 20));
 
         jLabel7.setForeground(new java.awt.Color(0, 255, 0));
         jLabel7.setText("TOTAL $ ");
@@ -169,10 +185,22 @@ public class NuevaVenta extends javax.swing.JDialog {
         total.setForeground(new java.awt.Color(0, 255, 0));
         getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, 120, 20));
 
+        Cancelar.setBackground(new java.awt.Color(102, 102, 102));
+        Cancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Cancelar.setForeground(new java.awt.Color(255, 255, 255));
+        Cancelar.setText("CANCELAR VENTA");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 230, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarProductoActionPerformed
+
         int ID = productoBox.getSelectedIndex();
         int codigoBuscado = listaProductos.get(ID).getCodigo();
         int cantidadVendida = Integer.parseInt(NumeroProductos.getValue().toString());
@@ -185,19 +213,12 @@ public class NuevaVenta extends javax.swing.JDialog {
             arreglo[1] = Integer.toString(cantidadVendida);
             arreglo[2] = Double.toString(listaProductos.get(ID).getPrecio());
             arreglo[3] = Double.toString(listaProductos.get(ID).getPrecio() * cantidadVendida);
+            Producto nuevoProducto = new Producto (listaProductos.get(ID).getNombre(),listaProductos.get(ID).getStock(),listaProductos.get(ID).getPrecio(),listaProductos.get(ID).getCodigo());
             total.setText(Double.toString(Double.parseDouble(total.getText()) + listaProductos.get(ID).getPrecio() * cantidadVendida) );
             modelo.addRow(arreglo);
             tablaVenta.setModel(modelo);
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // Aca tenes que guardar el prdoucto que en la linea de ventas.!!!!
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+            lineaProductos.setListaProducto(nuevoProducto);
+
     }
         
     }//GEN-LAST:event_botonAgregarProductoActionPerformed
@@ -210,16 +231,8 @@ public class NuevaVenta extends javax.swing.JDialog {
         for( Producto key : listaProductos){
             Seguridad.Archivo.nuevoProducto(key);
         }
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // Aca tenes que guardar el total y el ID de LA venta Y etc.!!!!
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        // IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        setVisible(false);
+        ventaRealizada = true;
     }//GEN-LAST:event_finalizarVentaActionPerformed
 
     private void productoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productoBoxActionPerformed
@@ -230,8 +243,16 @@ public class NuevaVenta extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_productoBoxActionPerformed
 
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_CancelarActionPerformed
+
+    public boolean ventaRealizada(){
+        return ventaRealizada;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Cancelar;
     private javax.swing.JComboBox<String> DescuentoBox;
     private javax.swing.JSpinner NumeroProductos;
     private javax.swing.JButton botonAgregarProducto;

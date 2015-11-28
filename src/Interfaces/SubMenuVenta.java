@@ -1,21 +1,49 @@
 
 package Interfaces;
 
+import Entidades.Linea;
+import Entidades.Producto;
+import Entidades.Venta;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Caffia
  */
 public class SubMenuVenta extends javax.swing.JDialog {
+    
+    private List <Venta> listaVenta ;
+
+    private Venta ventas;
 
     /**
      * Creates new form SubMenuVenta
+     * @param parent
+     * @param modal
+     * @param lV
      */
-    public SubMenuVenta(java.awt.Frame parent, boolean modal) {
+    public SubMenuVenta(java.awt.Frame parent, boolean modal ,List <Venta> lV) {
         super(parent, modal);
         initComponents();
         getContentPane().setBackground(Color.DARK_GRAY);
+        listaVenta = lV;
+        inicializarTabla();
+    }
+    
+    private void inicializarTabla(){
+        DefaultTableModel modelo=(DefaultTableModel) tablaVenta.getModel();    
+        String arreglo [] = new String[4];
+        for(Venta n: listaVenta){
+            arreglo[0] = Integer.toString(n.getIdFactura());
+            arreglo[1] = "none";
+            arreglo[2] = n.getFecha().toString();
+            arreglo[3] = Double.toString(n.getTotal());
+            modelo.addRow(arreglo);   
+        }
+        tablaVenta.setModel(modelo);
     }
 
     @SuppressWarnings("unchecked")
@@ -47,29 +75,10 @@ public class SubMenuVenta extends javax.swing.JDialog {
         tablaVenta.setForeground(new java.awt.Color(102, 102, 102));
         tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Venta", "Total", "Tarjeta", "ID", "Fecha"
+                "ID", "Tarjeta", "Fecha", "Total"
             }
         ));
         tablaVenta.setPreferredSize(new java.awt.Dimension(375, 398));
@@ -83,47 +92,21 @@ public class SubMenuVenta extends javax.swing.JDialog {
     private void nuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaVentaActionPerformed
         NuevaVenta nueva = new NuevaVenta(new javax.swing.JFrame(), true);
         nueva.setVisible(true);
+        System.out.println(nueva.ventaRealizada());
+        if ( nueva.ventaRealizada() ){
+            Venta n = new Venta(listaVenta.size() , nueva.getLineaVenta() , nueva.getTotal());
+            listaVenta.add(n);
+            DefaultTableModel modelo=(DefaultTableModel) tablaVenta.getModel();    
+            String arreglo [] = new String[4];
+            arreglo[0] = Integer.toString(n.getIdFactura());
+            arreglo[1] = "none";
+            arreglo[2] = n.getFecha().toString();
+            arreglo[3] = Double.toString(n.getTotal());
+            modelo.addRow(arreglo);
+            tablaVenta.setModel(modelo);
+        }
     }//GEN-LAST:event_nuevaVentaActionPerformed
 
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SubMenuVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SubMenuVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SubMenuVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SubMenuVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                SubMenuVenta dialog = new SubMenuVenta(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
