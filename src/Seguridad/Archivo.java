@@ -27,9 +27,10 @@ import Interfaces.Error;
 
 public  class Archivo {
     
-    
-    
-    private static void inicializarTarjeta(){
+    /**
+     *
+     */
+    public static void inicializarTarjeta(){
         String outputFile = "test/archivo_tarjeta.csv";
          try {
 

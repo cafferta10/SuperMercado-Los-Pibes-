@@ -72,7 +72,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
 
         tablaVenta.setBackground(new java.awt.Color(0, 0, 0));
         tablaVenta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tablaVenta.setForeground(new java.awt.Color(102, 102, 102));
+        tablaVenta.setForeground(new java.awt.Color(255, 255, 255));
         tablaVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -92,14 +92,13 @@ public class SubMenuVenta extends javax.swing.JDialog {
     private void nuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaVentaActionPerformed
         NuevaVenta nueva = new NuevaVenta(new javax.swing.JFrame(), true);
         nueva.setVisible(true);
-        System.out.println(nueva.ventaRealizada());
         if ( nueva.ventaRealizada() ){
-            Venta n = new Venta(listaVenta.size() , nueva.getLineaVenta() , nueva.getTotal());
+            Venta n = new Venta(listaVenta.size() , nueva.getLineaVenta() , nueva.getTotal() , nueva.getTarjeta());
             listaVenta.add(n);
             DefaultTableModel modelo=(DefaultTableModel) tablaVenta.getModel();    
             String arreglo [] = new String[4];
             arreglo[0] = Integer.toString(n.getIdFactura());
-            arreglo[1] = "none";
+            arreglo[1] = nueva.getTarjeta();
             arreglo[2] = n.getFecha().toString();
             arreglo[3] = Double.toString(n.getTotal());
             modelo.addRow(arreglo);

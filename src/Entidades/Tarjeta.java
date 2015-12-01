@@ -21,12 +21,17 @@ public class Tarjeta {
 	return puntos;
 	}
         
-        
-    public void setPuntos(int puntos) {
-	this.puntos = puntos;
-	}
-        
-        
+    public void AcumularPuntos(int puntos){
+        if (this.puntos + puntos <= 1000){
+            this.puntos += puntos;
+        }
+    }
+    
+    public int CangearPuntos(){
+        int aux = this.puntos;
+        this.puntos = 0;
+        return aux  ;
+    }
    
         
         

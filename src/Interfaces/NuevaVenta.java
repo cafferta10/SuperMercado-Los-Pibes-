@@ -36,10 +36,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         getContentPane().setBackground(Color.DARK_GRAY);
         DescuentoBox.removeAllItems();
         cargarBoxProducto();
-        cargarBoxCliente();
-        NumeroProductos.setModel(cambiarCantidad(listaProductos.get(0).getStock()));
-        precio.setText("c/u $ "+listaProductos.get(0).getPrecio().toString());
-        total.setText("0");
+        cargarBoxCliente(); 
     }
     
     public void cargarBoxProducto(){
@@ -47,13 +44,19 @@ public class NuevaVenta extends javax.swing.JDialog {
         for(Producto p : listaProductos ){
             productoBox.addItem(p.getNombre());
         }
+        NumeroProductos.setModel(cambiarCantidad(listaProductos.get(0).getStock()));
+        precio.setText("c/u $ "+listaProductos.get(0).getPrecio().toString());
+        total.setText("0");
     }
     
     public void cargarBoxCliente(){
         clientebox.removeAllItems();
+        clientebox.addItem("NINGUNO");
         for(Tarjeta p : listaTarjetas){
-            productoBox.addItem(p.getCodigo());
+            clientebox.addItem(p.getCodigo());
         }
+        Puntos.setText("XXXX");
+        cambiarPuntos.setEnabled(false);
     }
     
     public Linea getLineaVenta(){
@@ -61,7 +64,7 @@ public class NuevaVenta extends javax.swing.JDialog {
     }
     
     public Double getTotal(){
-        return Double.parseDouble(total.getText().toString());
+        return Double.parseDouble(total.getText());
     }
     
     
@@ -69,6 +72,9 @@ public class NuevaVenta extends javax.swing.JDialog {
         return new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(0, 0, max , 1)).getModel();
     }
     
+    public String getTarjeta(){
+        return listaTarjetas.get(clientebox.getSelectedIndex()).getCodigo();
+    }
     
     
     @SuppressWarnings("unchecked")
@@ -93,6 +99,8 @@ public class NuevaVenta extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
         Cancelar = new javax.swing.JButton();
+        Puntos = new javax.swing.JLabel();
+        cambiarPuntos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -124,7 +132,15 @@ public class NuevaVenta extends javax.swing.JDialog {
             new String [] {
                 "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaVenta.setPreferredSize(new java.awt.Dimension(300, 398));
         jScrollPane1.setViewportView(tablaVenta);
 
@@ -164,7 +180,7 @@ public class NuevaVenta extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Precio");
+        jLabel4.setText("PRECIO");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, 30));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -182,18 +198,23 @@ public class NuevaVenta extends javax.swing.JDialog {
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, 30));
 
         clientebox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(clientebox, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 100, -1));
+        clientebox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clienteboxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(clientebox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 80, -1));
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("CLIENTE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 50, 20));
+        jLabel2.setForeground(new java.awt.Color(255, 0, 153));
+        jLabel2.setText("PTS:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 30, 20));
 
         jLabel7.setForeground(new java.awt.Color(0, 255, 0));
         jLabel7.setText("TOTAL $ ");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, -1, 20));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, -1, 20));
 
         total.setForeground(new java.awt.Color(0, 255, 0));
-        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, 120, 20));
+        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 390, 110, 20));
 
         Cancelar.setBackground(new java.awt.Color(102, 102, 102));
         Cancelar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -205,6 +226,19 @@ public class NuevaVenta extends javax.swing.JDialog {
             }
         });
         getContentPane().add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 230, -1));
+
+        Puntos.setForeground(new java.awt.Color(255, 0, 102));
+        Puntos.setText("puntos");
+        getContentPane().add(Puntos, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 40, 20));
+
+        cambiarPuntos.setBackground(new java.awt.Color(51, 255, 51));
+        cambiarPuntos.setText("CANGEAR");
+        cambiarPuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambiarPuntosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cambiarPuntos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, -1, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -235,15 +269,29 @@ public class NuevaVenta extends javax.swing.JDialog {
 
     private void finalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarVentaActionPerformed
        if (Double.parseDouble(total.getText()) > 0){
-            String outputFile = "test/archivo_producto.csv";
-            File ficheroProducto = new File(outputFile);
-            ficheroProducto.delete();
-            Seguridad.Archivo.inicializarProducto(); 
-            for( Producto key : listaProductos){
-                Seguridad.Archivo.nuevoProducto(key);
-            }
-            setVisible(false);
-            ventaRealizada = true;
+           //limpio el archivo de productos para actualizar el stock.-
+           String outputFile = "test/archivo_producto.csv";
+           File ficheroProducto = new File(outputFile);
+           ficheroProducto.delete();
+           Seguridad.Archivo.inicializarProducto(); 
+           for( Producto key : listaProductos){
+               Seguridad.Archivo.nuevoProducto(key);
+           }
+           int value = clientebox.getSelectedIndex();
+           if (value > 0 ){
+                Double porcentaje = (Double.parseDouble(total.getText()) * 5) /100.0;
+                listaTarjetas.get(value -1).AcumularPuntos( porcentaje.intValue() );
+                outputFile = "test/archivo_tarjeta.csv";
+                File ficheroTarjeta = new File(outputFile);
+                ficheroTarjeta.delete();
+                Seguridad.Archivo.inicializarTarjeta(); 
+                for( Tarjeta tar : listaTarjetas){
+                    Seguridad.Archivo.nuevaTarjeta(tar);
+                }
+           }
+           
+           setVisible(false);
+           ventaRealizada = true;
        }
     }//GEN-LAST:event_finalizarVentaActionPerformed
 
@@ -259,6 +307,30 @@ public class NuevaVenta extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_CancelarActionPerformed
 
+    private void clienteboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteboxActionPerformed
+        int value = clientebox.getSelectedIndex();
+        if(value >= 1){
+            Puntos.setText(Integer.toString(listaTarjetas.get(value-1).getPuntos()));
+            cambiarPuntos.setEnabled(true);
+        }
+        else{
+            Puntos.setText("XXXX");
+            cambiarPuntos.setEnabled(false);
+        }
+    }//GEN-LAST:event_clienteboxActionPerformed
+
+    private void cambiarPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarPuntosActionPerformed
+        if (Double.parseDouble(Puntos.getText()) > 0){
+            Double t = Double.parseDouble(total.getText()) - Double.parseDouble(Puntos.getText());
+            if (t < 0.0 ){
+                t = 0.0;
+            }
+            total.setText(t.toString());
+            Puntos.setText("0");
+            listaTarjetas.get(clientebox.getSelectedIndex()).CangearPuntos();
+        }
+    }//GEN-LAST:event_cambiarPuntosActionPerformed
+
     public boolean ventaRealizada(){
         return ventaRealizada;
     }
@@ -267,7 +339,9 @@ public class NuevaVenta extends javax.swing.JDialog {
     private javax.swing.JButton Cancelar;
     private javax.swing.JComboBox<String> DescuentoBox;
     private javax.swing.JSpinner NumeroProductos;
+    private javax.swing.JLabel Puntos;
     private javax.swing.JButton botonAgregarProducto;
+    private javax.swing.JButton cambiarPuntos;
     private javax.swing.JComboBox<String> clientebox;
     private javax.swing.JButton finalizarVenta;
     private javax.swing.JLabel jLabel1;
