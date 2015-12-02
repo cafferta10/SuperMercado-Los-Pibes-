@@ -86,15 +86,15 @@ public class Historial extends javax.swing.JDialog {
     private  void cargarTabla(String clave){
         List<HistorialPrecio> lista = Seguridad.Archivo.listaHistorial(clave);
         DefaultTableModel modelo=(DefaultTableModel) jTable1.getModel();    
-        String arreglo [] = new String[4];
+        String arreglo [] = new String[3];
         for (HistorialPrecio historial : lista){
-            System.out.println("cargo");
             arreglo[0] = historial.getId();
             arreglo[1] = historial.getPrecio().toString();
             arreglo[2] = historial.getFecha().toString();
-            modelo.addRow(arreglo);
-            jTable1.setModel(modelo);
+            modelo.addRow(arreglo);   
         }
+        jTable1.setModel(modelo);
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

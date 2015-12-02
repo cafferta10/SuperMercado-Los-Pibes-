@@ -36,6 +36,6 @@ public class HistorialPrecio {
     }
     
     public String getFecha(){
-        return this.fecha.toLocaleString();
+        return this.fecha.toGMTString();
     }
 }

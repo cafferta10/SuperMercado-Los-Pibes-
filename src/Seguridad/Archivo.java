@@ -224,6 +224,7 @@ public  class Archivo {
             while (historial_import.readRecord())
             {
                 String ID = historial_import.get("ID");
+                System.out.println(ID + "  este es el id que esta pasando");
                 if (clave.equals(ID)){
                     Double precio = Double.parseDouble(historial_import.get("PRECIO"));
                     Date fecha = new Date(historial_import.get("FECHA"));
