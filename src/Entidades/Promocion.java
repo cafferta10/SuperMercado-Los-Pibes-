@@ -3,6 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/**
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
+ */
 package Entidades;
 
 public abstract class Promocion {

@@ -7,8 +7,8 @@ import Entidades.Venta;
 
 /**
  *
- * @author Alan
- * @author Caffia
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 public class HistorialVenta extends javax.swing.JDialog {
 
@@ -78,7 +78,7 @@ public class HistorialVenta extends javax.swing.JDialog {
         tablaVenta.setPreferredSize(new java.awt.Dimension(300, 398));
         jScrollPane1.setViewportView(tablaVenta);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 470, 280));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 470, 250));
 
         jLabel3.setBackground(new java.awt.Color(51, 51, 51));
         jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -89,15 +89,15 @@ public class HistorialVenta extends javax.swing.JDialog {
 
         tarjeta.setForeground(new java.awt.Color(255, 0, 153));
         tarjeta.setText("TARJETA");
-        getContentPane().add(tarjeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 100, 20));
+        getContentPane().add(tarjeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 20));
 
         total.setForeground(new java.awt.Color(0, 255, 0));
         total.setText("TOTAL $ ");
-        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, 240, 20));
+        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 240, 20));
 
         fecha.setForeground(new java.awt.Color(255, 0, 102));
         fecha.setText("FECHA");
-        getContentPane().add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 230, 20));
+        getContentPane().add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 270, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

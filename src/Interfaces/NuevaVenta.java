@@ -18,7 +18,8 @@ import Entidades.Tarjeta;
 
 /**
  *
- * @author Caffia
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 public class NuevaVenta extends javax.swing.JDialog {
     
@@ -89,7 +90,13 @@ public class NuevaVenta extends javax.swing.JDialog {
     }
     
     public String getTarjeta(){
-        return listaTarjetas.get(clientebox.getSelectedIndex()).getCodigo();
+        int value = clientebox.getSelectedIndex() ;
+        if (value > 0){
+            return listaTarjetas.get(value).getCodigo();
+        }
+        else{
+            return "NO REGISTRADO";
+        }
     }
     
     
@@ -266,7 +273,7 @@ public class NuevaVenta extends javax.swing.JDialog {
 
     private void crearDescuento(){
         String  tipo = DescuentoBox.getItemAt(DescuentoBox.getSelectedIndex());
-        if ((tipo == "Combo 2x3") | (tipo == "Combo 6x8" )){
+        if ((tipo == "Combo 3x2") | (tipo == "Combo 8x6" )){
             descuento = new Combos();
     }
         else {
@@ -312,7 +319,7 @@ public class NuevaVenta extends javax.swing.JDialog {
     }//GEN-LAST:event_botonAgregarProductoActionPerformed
 
     private void finalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarVentaActionPerformed
-       if (Double.parseDouble(total.getText()) > 0){
+       if (tablaVenta.getRowCount() > 0){
            //limpio el archivo de productos para actualizar el stock.-
            String outputFile = "test/archivo_producto.csv";
            File ficheroProducto = new File(outputFile);
@@ -371,12 +378,12 @@ public class NuevaVenta extends javax.swing.JDialog {
             }
             total.setText(t.toString());
             Puntos.setText("0");
-            listaTarjetas.get(clientebox.getSelectedIndex()).CangearPuntos();
+            listaTarjetas.get(clientebox.getSelectedIndex() - 1 ).CangearPuntos();
         }
     }//GEN-LAST:event_cambiarPuntosActionPerformed
 
     private void DescuentoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescuentoBoxActionPerformed
-
+        //nada
     }//GEN-LAST:event_DescuentoBoxActionPerformed
 
     public boolean ventaRealizada(){

@@ -1,4 +1,8 @@
-
+/**
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
+ */
 package Interfaces;
 
 import java.awt.Color;
@@ -28,18 +32,18 @@ public class Error extends javax.swing.JDialog {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(500, 230));
         setPreferredSize(new java.awt.Dimension(500, 230));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         informacionError.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         informacionError.setForeground(new java.awt.Color(255, 255, 255));
         informacionError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        add(informacionError, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 500, 30));
+        getContentPane().add(informacionError, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 500, 30));
 
         tituloPrincipal.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         tituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         tituloPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tituloPrincipal.setText("ERROR");
-        add(tituloPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, -1));
+        getContentPane().add(tituloPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 500, -1));
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -50,7 +54,7 @@ public class Error extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

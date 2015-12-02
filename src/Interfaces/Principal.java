@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  *
- * @author Franco
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 public class Principal extends javax.swing.JFrame {
 

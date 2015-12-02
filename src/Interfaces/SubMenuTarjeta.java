@@ -10,7 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-
+/**
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
+ */
 
 public class SubMenuTarjeta extends javax.swing.JDialog {
 

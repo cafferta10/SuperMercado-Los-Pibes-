@@ -20,9 +20,9 @@ import Entidades.HistorialPrecio;
 import Interfaces.Error;
 
 /**
- * 
- * @author Alan
- * @author Caffia
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 
 public  class Archivo {

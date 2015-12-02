@@ -1,4 +1,9 @@
 
+/**
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
+ */
 package Entidades;
 
 import java.util.Date;

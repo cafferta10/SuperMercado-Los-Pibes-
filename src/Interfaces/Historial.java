@@ -15,7 +15,8 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author alan
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 public class Historial extends javax.swing.JDialog {
 

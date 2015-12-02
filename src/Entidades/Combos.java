@@ -1,4 +1,8 @@
-
+/**
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
+ */
 package Entidades;
 
 public class Combos extends Promocion {
@@ -15,12 +19,12 @@ public class Combos extends Promocion {
     public Double calcularDescuento(String tipoDescuento, Double precioProducto, int cantidad) {
         int combos;
         double total = 0;
-        if (tipoDescuento == "Combo 2x3"){
+        if (tipoDescuento == "Combo 3x2"){
             combos =cantidad / 3;
             total = (precioProducto*2)*combos;
         }
         else{
-            if (tipoDescuento == "Combo 6x8"){
+            if (tipoDescuento == "Combo 8x6"){
                 combos = cantidad/ 8;
                 total =  (precioProducto*6)*combos;
             }      

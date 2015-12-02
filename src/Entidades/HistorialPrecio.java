@@ -2,9 +2,9 @@ package Entidades;
 
 import java.util.Date;
 /**
- * 
- * @author Alan
- * @author Caffia
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 
 public class HistorialPrecio {

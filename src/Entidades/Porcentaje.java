@@ -1,4 +1,8 @@
-
+/**
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
+ */
 package Entidades;
 
 public class Porcentaje extends Promocion {

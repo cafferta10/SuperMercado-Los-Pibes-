@@ -15,9 +15,9 @@ import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * 
- * @author Alan
- * @author Caffia
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 public class SubMenuProducto extends javax.swing.JDialog {
     

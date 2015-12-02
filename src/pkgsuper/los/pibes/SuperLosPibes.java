@@ -1,4 +1,8 @@
-
+/**
+ *
+ * @author  Alan Asmis
+ * @author Franco Cafferata
+ */
 package pkgsuper.los.pibes;
 import Interfaces.Principal;
 import Seguridad.Archivo;

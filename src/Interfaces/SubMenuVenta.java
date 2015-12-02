@@ -8,7 +8,8 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Caffia
+ * @author  Alan Asmis
+ * @author Franco Cafferata
  */
 public class SubMenuVenta extends javax.swing.JDialog {
     
@@ -35,7 +36,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
         String arreglo [] = new String[4];
         for(Venta n: listaVenta){
             arreglo[0] = Integer.toString(n.getIdFactura());
-            arreglo[1] = "none";
+            arreglo[1] = n.getTarjeta();
             arreglo[2] = n.getFecha().toString();
             arreglo[3] = Double.toString(n.getTotal());
             modelo.addRow(arreglo);   
