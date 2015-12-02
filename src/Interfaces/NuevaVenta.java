@@ -3,6 +3,7 @@ package Interfaces;
 
 
 
+import Entidades.Combos;
 import java.awt.Color;
 import java.io.File;
 import java.util.List;
@@ -10,9 +11,10 @@ import javax.swing.SpinnerModel;
 import javax.swing.table.DefaultTableModel;
 
 import Entidades.Linea;
+import Entidades.Porcentaje;
 import Entidades.Producto;
+import Entidades.Promocion;
 import Entidades.Tarjeta;
-import Entidades.Venta;
 
 /**
  *
@@ -24,6 +26,8 @@ public class NuevaVenta extends javax.swing.JDialog {
     private List <Tarjeta> listaTarjetas = Seguridad.Archivo.listaTarjeta();
     private Linea lineaProductos = new Linea();
     private boolean ventaRealizada = false;
+    private Promocion descuento;
+    
     /**
      * Creates new form NuevaVenta
      * @param parent
@@ -37,7 +41,19 @@ public class NuevaVenta extends javax.swing.JDialog {
         DescuentoBox.removeAllItems();
         cargarBoxProducto();
         cargarBoxCliente(); 
+        cargarBoxDescuento();
     }
+    
+    public void cargarBoxDescuento(){
+        DescuentoBox.removeAllItems();
+        DescuentoBox.addItem("Ninguno");
+        DescuentoBox.addItem("Combo 3x2");
+        DescuentoBox.addItem("Combo 8x6");
+        DescuentoBox.addItem("25%");
+        DescuentoBox.addItem("15%");
+        DescuentoBox.addItem("10%");
+        DescuentoBox.addItem("5%");
+}
     
     public void cargarBoxProducto(){
         productoBox.removeAllItems();
@@ -176,6 +192,11 @@ public class NuevaVenta extends javax.swing.JDialog {
         getContentPane().add(productoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 100, 20));
 
         DescuentoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        DescuentoBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DescuentoBoxActionPerformed(evt);
+            }
+        });
         getContentPane().add(DescuentoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 80, 20));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -243,11 +264,34 @@ public class NuevaVenta extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void crearDescuento(){
+        String  tipo = DescuentoBox.getItemAt(DescuentoBox.getSelectedIndex());
+        if ((tipo == "Combo 2x3") | (tipo == "Combo 6x8" )){
+            descuento = new Combos();
+    }
+        else {
+             if ((tipo == "25%") || (tipo == "15%" )|| (tipo == "10%" )|| (tipo == "5%" ))
+                 descuento = new Porcentaje();
+             else
+                 descuento = null;
+        }
+
+    }
+    
+    
     private void botonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarProductoActionPerformed
 
         int ID = productoBox.getSelectedIndex();
         int codigoBuscado = listaProductos.get(ID).getCodigo();
         int cantidadVendida = Integer.parseInt(NumeroProductos.getValue().toString());
+        Double descuentoFinal = 0.0;
+        crearDescuento();
+        if (descuento != null){
+            descuentoFinal = descuento.calcularDescuento(DescuentoBox.getItemAt(DescuentoBox.getSelectedIndex()),listaProductos.get(ID).getPrecio() , cantidadVendida); 
+        }
+        else{
+            descuentoFinal = listaProductos.get(ID).getPrecio() * cantidadVendida;
+        }
         if (cantidadVendida > 0){
             listaProductos.get(ID).setStock( listaProductos.get(ID).getStock() - cantidadVendida);
             NumeroProductos.setModel(cambiarCantidad(listaProductos.get(ID).getStock()));
@@ -256,12 +300,12 @@ public class NuevaVenta extends javax.swing.JDialog {
             arreglo[0] = Integer.toString(codigoBuscado);
             arreglo[1] = Integer.toString(cantidadVendida);
             arreglo[2] = Double.toString(listaProductos.get(ID).getPrecio());
-            arreglo[3] = Double.toString(listaProductos.get(ID).getPrecio() * cantidadVendida);
+            arreglo[3] = Double.toString(descuentoFinal);
             Producto nuevoProducto = new Producto (listaProductos.get(ID).getNombre(),listaProductos.get(ID).getStock(),listaProductos.get(ID).getPrecio(),listaProductos.get(ID).getCodigo());
-            total.setText(Double.toString(Double.parseDouble(total.getText()) + listaProductos.get(ID).getPrecio() * cantidadVendida) );
+            total.setText(Double.toString(Double.parseDouble(total.getText())+descuentoFinal) );
             modelo.addRow(arreglo);
             tablaVenta.setModel(modelo);
-            lineaProductos.setListaProducto(nuevoProducto);
+            lineaProductos.setListaProducto(new Producto (listaProductos.get(ID).getNombre(),cantidadVendida,descuentoFinal,listaProductos.get(ID).getCodigo()));
 
     }
         
@@ -330,6 +374,10 @@ public class NuevaVenta extends javax.swing.JDialog {
             listaTarjetas.get(clientebox.getSelectedIndex()).CangearPuntos();
         }
     }//GEN-LAST:event_cambiarPuntosActionPerformed
+
+    private void DescuentoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescuentoBoxActionPerformed
+
+    }//GEN-LAST:event_DescuentoBoxActionPerformed
 
     public boolean ventaRealizada(){
         return ventaRealizada;

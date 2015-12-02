@@ -1,11 +1,8 @@
 
 package Interfaces;
 
-import Entidades.Linea;
-import Entidades.Producto;
 import Entidades.Venta;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -80,8 +77,21 @@ public class SubMenuVenta extends javax.swing.JDialog {
             new String [] {
                 "ID", "Tarjeta", "Fecha", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaVenta.setPreferredSize(new java.awt.Dimension(375, 398));
+        tablaVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verHistorial(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaVenta);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 470, 290));
@@ -105,6 +115,12 @@ public class SubMenuVenta extends javax.swing.JDialog {
             tablaVenta.setModel(modelo);
         }
     }//GEN-LAST:event_nuevaVentaActionPerformed
+
+    private void verHistorial(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verHistorial
+        Venta v = listaVenta.get(tablaVenta.getSelectedRow());
+        HistorialVenta nueva = new HistorialVenta(new javax.swing.JFrame(), true,v);
+        nueva.setVisible(true);
+    }//GEN-LAST:event_verHistorial
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

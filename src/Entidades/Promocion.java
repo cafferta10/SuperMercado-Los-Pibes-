@@ -7,6 +7,6 @@ package Entidades;
 
 public abstract class Promocion {
     
-    public abstract void calcularDescuento();
+    public abstract Double calcularDescuento(String tipoDescuento, Double precioProdcuto, int cantidad);
     
 }

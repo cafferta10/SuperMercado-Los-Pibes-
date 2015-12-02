@@ -9,7 +9,7 @@ public class Linea {
     private ArrayList <Producto> listaProducto ;
     
     
-    public ArrayList getListaProducto() {
+    public ArrayList<Producto> getListaProducto() {
 	return listaProducto;
 	}
     
