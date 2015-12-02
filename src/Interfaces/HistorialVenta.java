@@ -64,7 +64,7 @@ public class HistorialVenta extends javax.swing.JDialog {
 
             },
             new String [] {
-                "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"
+                "DESCRIPCION", "CANTIDAD", "PRECIO U/DES", "TOTAL"
             }
         ) {
             boolean[] canEdit = new boolean [] {

@@ -284,12 +284,6 @@ public  class Archivo {
 		e.printStackTrace();
 		}
         
-        
-        if (campos != ""){
-            Error nuevoError = new Error (new javax.swing.JDialog(),true,campos);
-            nuevoError.setVisible(true);
-        }
-        
         return productoEncontrado;
     }
     

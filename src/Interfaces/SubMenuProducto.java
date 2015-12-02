@@ -217,31 +217,51 @@ public class SubMenuProducto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void agregar(){
-        
+        String errorCampos = "";
         int codigo = 0;
+        int Stock = 0;
+        Double precio = 0.0;
         String nombre = barraDescripcion.getText();
-        int Stock = Integer.parseInt(barraStock.getText());
-        Double precio = Double.parseDouble(barraPrecio.getText());
+        if (nombre.equals("")){
+            errorCampos +="error en el nombre ,";      
+        }
         try {
+            Stock = Integer.parseInt(barraStock.getText());
+            precio = Double.parseDouble(barraPrecio.getText());
+        }  
+        catch(NumberFormatException ex){
+            errorCampos += " solo se acepta valores numericos en los campos estock y precio ";
+        }
+        
+        
+        if (errorCampos != ""){
+            Error error = new Error(new javax.swing.JFrame(),true, errorCampos);
+            error.setVisible(true);
+        }
+        else {
+            try  {
             CsvReader producto_import = new CsvReader("test/archivo_producto.csv");     
             while (producto_import.readRecord()){
                 codigo ++;
             }
             producto_import.close();
-        Producto nuevoProducto = new Producto (nombre,Stock,precio,codigo);
-        Archivo.nuevoProducto(nuevoProducto);
-        agregarTabla( nuevoProducto);
-        barraDescripcion.setText("");
-        barraPrecio.setText("");
-        barraStock.setText("");
+            Producto nuevoProducto = new Producto (nombre,Stock,precio,codigo);
+            Archivo.nuevoProducto(nuevoProducto);
+            agregarTabla( nuevoProducto);
+            barraDescripcion.setText("");
+            barraPrecio.setText("");
+            barraStock.setText("");
+        }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        
 		
 	} 
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-            } 
-        catch (IOException e) {
-            e.printStackTrace();
-            }
+        
         
     }
     
