@@ -1,10 +1,4 @@
-Nombre,Stock,Precio,Codigo
-Dulce de leche,10990715,24.0,1
-leche Cotagu,887993,23.0,2
-mermelada,9793345,38.99,3
-coca cola,9,45.0,4
-fernet,99990,70.0,5
-coca,1,25.0,6
-pepsi,966,45.0,7
-AlgoDe100Pesos,12330,100.0,8
-Pan,28,35.0,9
+Nombre,Stock,Precio,Codigo,Descuento
+mermelada,16,12.0,1,25%
+coca Cola,199,3.8,2,Ninguno
+campari,5,40.5,3,Combo 3x2

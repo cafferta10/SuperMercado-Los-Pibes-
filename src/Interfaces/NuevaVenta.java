@@ -39,22 +39,10 @@ public class NuevaVenta extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         getContentPane().setBackground(Color.DARK_GRAY);
-        DescuentoBox.removeAllItems();
         cargarBoxProducto();
         cargarBoxCliente(); 
-        cargarBoxDescuento();
     }
     
-    public void cargarBoxDescuento(){
-        DescuentoBox.removeAllItems();
-        DescuentoBox.addItem("Ninguno");
-        DescuentoBox.addItem("Combo 3x2");
-        DescuentoBox.addItem("Combo 8x6");
-        DescuentoBox.addItem("25%");
-        DescuentoBox.addItem("15%");
-        DescuentoBox.addItem("10%");
-        DescuentoBox.addItem("5%");
-}
     
     public void cargarBoxProducto(){
         productoBox.removeAllItems();
@@ -92,7 +80,7 @@ public class NuevaVenta extends javax.swing.JDialog {
     public String getTarjeta(){
         int value = clientebox.getSelectedIndex() ;
         if (value > 0){
-            return listaTarjetas.get(value).getCodigo();
+            return listaTarjetas.get(value-1).getCodigo();
         }
         else{
             return "NO REGISTRADO";
@@ -112,7 +100,6 @@ public class NuevaVenta extends javax.swing.JDialog {
         finalizarVenta = new javax.swing.JButton();
         NumeroProductos = new javax.swing.JSpinner();
         productoBox = new javax.swing.JComboBox<>();
-        DescuentoBox = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         precio = new javax.swing.JLabel();
@@ -124,6 +111,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         Cancelar = new javax.swing.JButton();
         Puntos = new javax.swing.JLabel();
         cambiarPuntos = new javax.swing.JButton();
+        tipoDescuento = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
@@ -153,11 +141,11 @@ public class NuevaVenta extends javax.swing.JDialog {
 
             },
             new String [] {
-                "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"
+                "DESCRIPCION", "CANTIDAD", "PRECIO UNITARIO", "DESCUENTO $", "TOTAL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -198,14 +186,6 @@ public class NuevaVenta extends javax.swing.JDialog {
         });
         getContentPane().add(productoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 100, 20));
 
-        DescuentoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        DescuentoBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DescuentoBoxActionPerformed(evt);
-            }
-        });
-        getContentPane().add(DescuentoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 80, 20));
-
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("PRECIO");
@@ -233,7 +213,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         });
         getContentPane().add(clientebox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 80, -1));
 
-        jLabel2.setForeground(new java.awt.Color(255, 0, 153));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("PTS:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 30, 20));
 
@@ -255,7 +235,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         });
         getContentPane().add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 230, -1));
 
-        Puntos.setForeground(new java.awt.Color(255, 0, 102));
+        Puntos.setForeground(new java.awt.Color(255, 255, 255));
         Puntos.setText("puntos");
         getContentPane().add(Puntos, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 40, 20));
 
@@ -268,9 +248,14 @@ public class NuevaVenta extends javax.swing.JDialog {
         });
         getContentPane().add(cambiarPuntos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, -1, 20));
 
+        tipoDescuento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tipoDescuento.setForeground(new java.awt.Color(204, 0, 0));
+        tipoDescuento.setText("Tipo");
+        getContentPane().add(tipoDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 80, 20));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/*
     private void crearDescuento(){
         String  tipo = DescuentoBox.getItemAt(DescuentoBox.getSelectedIndex());
         if ((tipo == "Combo 3x2") | (tipo == "Combo 8x6" )){
@@ -284,7 +269,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         }
 
     }
-    
+    */
     
     private void botonAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarProductoActionPerformed
 
@@ -292,9 +277,8 @@ public class NuevaVenta extends javax.swing.JDialog {
         int codigoBuscado = listaProductos.get(ID).getCodigo();
         int cantidadVendida = Integer.parseInt(NumeroProductos.getValue().toString());
         Double descuentoFinal = 0.0;
-        crearDescuento();
-        if (descuento != null){
-            descuentoFinal = descuento.calcularDescuento(DescuentoBox.getItemAt(DescuentoBox.getSelectedIndex()),listaProductos.get(ID).getPrecio() , cantidadVendida); 
+        if (listaProductos.get(ID).getPromocion() != null){
+            descuentoFinal = listaProductos.get(ID).getPrecio(cantidadVendida);
         }
         else{
             descuentoFinal = listaProductos.get(ID).getPrecio() * cantidadVendida;
@@ -351,6 +335,7 @@ public class NuevaVenta extends javax.swing.JDialog {
         if(value >= 0){
             NumeroProductos.setModel(cambiarCantidad(listaProductos.get(value).getStock()));
             precio.setText("c/u $ "+listaProductos.get(value).getPrecio().toString());
+            tipoDescuento.setText(listaProductos.get(value).getTipoPromocion());
         }
     }//GEN-LAST:event_productoBoxActionPerformed
 
@@ -382,17 +367,12 @@ public class NuevaVenta extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cambiarPuntosActionPerformed
 
-    private void DescuentoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescuentoBoxActionPerformed
-        //nada
-    }//GEN-LAST:event_DescuentoBoxActionPerformed
-
     public boolean ventaRealizada(){
         return ventaRealizada;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cancelar;
-    private javax.swing.JComboBox<String> DescuentoBox;
     private javax.swing.JSpinner NumeroProductos;
     private javax.swing.JLabel Puntos;
     private javax.swing.JButton botonAgregarProducto;
@@ -410,6 +390,7 @@ public class NuevaVenta extends javax.swing.JDialog {
     private javax.swing.JLabel precio;
     private javax.swing.JComboBox<String> productoBox;
     private javax.swing.JTable tablaVenta;
+    private javax.swing.JLabel tipoDescuento;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }

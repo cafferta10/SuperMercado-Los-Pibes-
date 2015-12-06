@@ -12,6 +12,22 @@ package Entidades;
 
 public abstract class Promocion {
     
-    public abstract Double calcularDescuento(String tipoDescuento, Double precioProdcuto, int cantidad);
+    String tipoDescuento = "Ninguno";
+
+    public Promocion(String tipoDescuento) {
+        this.tipoDescuento = tipoDescuento;
+    }
+
+    public String getTipoDescuento() {
+        return tipoDescuento;
+    }
+
+    public void setTipoDescuento(String tipoDescuento) {
+        this.tipoDescuento = tipoDescuento;
+    }
+    
+    
+    
+    public abstract Double calcularDescuento(Double precioProdcuto, int cantidad);
     
 }

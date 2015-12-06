@@ -7,13 +7,13 @@ package Entidades;
 
 public class Porcentaje extends Promocion {
     
-    public Porcentaje (){
-        super();
+    public Porcentaje (String tipoDescuento){
+        super(tipoDescuento);
     }
 
 
     @Override
-    public Double calcularDescuento(String tipoDescuento, Double precioProducto, int cantidad) {
+    public Double calcularDescuento(Double precioProducto, int cantidad) {
         Double total = precioProducto * cantidad;
         switch (tipoDescuento){
             case "25%":

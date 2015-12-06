@@ -29,32 +29,46 @@ public class SubMenuProducto extends javax.swing.JDialog {
         initComponents();
         getContentPane().setBackground(Color.DARK_GRAY);
         cargarTabla();
-        
+        cargarBoxDescuento();
+    }
+    
+    private void cargarBoxDescuento(){
+        DescuentoBox.removeAllItems();
+        DescuentoBox.addItem("Ninguno");
+        DescuentoBox.addItem("Combo 3x2");
+        DescuentoBox.addItem("Combo 8x6");
+        DescuentoBox.addItem("25%");
+        DescuentoBox.addItem("15%");
+        DescuentoBox.addItem("10%");
+        DescuentoBox.addItem("5%");
     }
     
      private  void cargarTabla(){
         ArrayList<Producto> listaProducto = Seguridad.Archivo.listaProducto();
-        DefaultTableModel modelo=(DefaultTableModel) tablaProducto.getModel();    
-        String arreglo [] = new String[4];
+        DefaultTableModel modelo= (DefaultTableModel) tablaProducto.getModel(); 
+        modelo.setRowCount(0);
+        String arreglo [] = new String[5];
         for (Producto datoProducto: listaProducto){
             arreglo[0] = Integer.toString(datoProducto.getCodigo());
             arreglo[1] = datoProducto.getNombre();
             arreglo[2] = Integer.toString(datoProducto.getStock());
             arreglo[3] = datoProducto.getPrecio().toString();
+            arreglo[4] = datoProducto.getTipoPromocion();
             modelo.addRow(arreglo);
-            tablaProducto.setModel(modelo);
         }
+        tablaProducto.setModel(modelo);
     }
      
      
      private void agregarTabla(Producto nuevoProducto){
         DefaultTableModel modelo=(DefaultTableModel) tablaProducto.getModel();    
-        String arreglo [] = new String[4];
+        String arreglo [] = new String[5];
        
         arreglo[0] = Integer.toString(nuevoProducto.getCodigo());
         arreglo[1] = nuevoProducto.getNombre();
         arreglo[2] = Integer.toString(nuevoProducto.getStock());
         arreglo[3] = nuevoProducto.getPrecio().toString();
+        arreglo[4] = nuevoProducto.getTipoPromocion();
         modelo.addRow(arreglo);
         tablaProducto.setModel(modelo);
         
@@ -77,6 +91,8 @@ public class SubMenuProducto extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         botonModificarProducto1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        DescuentoBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -96,7 +112,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonAgregarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 210, 20));
+        getContentPane().add(botonAgregarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 210, 20));
 
         botonModificarProducto.setBackground(new java.awt.Color(102, 102, 102));
         botonModificarProducto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -121,7 +137,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 botonQuitarProductoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonQuitarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 220, 20));
+        getContentPane().add(botonQuitarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 220, 20));
 
         tituloPrincipal.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         tituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,11 +153,11 @@ public class SubMenuProducto extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "CODIGO", "STOCK", "PRECIO UNITARIO"
+                "ID", "DESCRIPCION", "STOCK", "PRECIO UNITARIO", "DESCUENTO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true
+                false, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -156,7 +172,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tablaProducto);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 440, 240));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 440, 280));
 
         barraDescripcion.setBackground(new java.awt.Color(0, 0, 0));
         barraDescripcion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -167,13 +183,13 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 barraDescripcionActionPerformed(evt);
             }
         });
-        getContentPane().add(barraDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 340, 30));
+        getContentPane().add(barraDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 180, 30));
 
         barraStock.setBackground(new java.awt.Color(0, 0, 0));
         barraStock.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         barraStock.setForeground(new java.awt.Color(255, 255, 255));
         barraStock.setCaretColor(new java.awt.Color(255, 255, 255));
-        getContentPane().add(barraStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, 30));
+        getContentPane().add(barraStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 90, 30));
 
         barraPrecio.setBackground(new java.awt.Color(0, 0, 0));
         barraPrecio.setForeground(new java.awt.Color(255, 255, 255));
@@ -184,7 +200,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
                 barraPrecioActionPerformed(evt);
             }
         });
-        getContentPane().add(barraPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 340, 30));
+        getContentPane().add(barraPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 120, 30));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,12 +210,12 @@ public class SubMenuProducto extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("PRECIO");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 80, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 60, 30));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("STOCK");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 60, 30));
 
         botonModificarProducto1.setBackground(new java.awt.Color(102, 102, 102));
         botonModificarProducto1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -212,6 +228,19 @@ public class SubMenuProducto extends javax.swing.JDialog {
         });
         getContentPane().add(botonModificarProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 210, 20));
         botonModificarProducto1.getAccessibleContext().setAccessibleName("historial");
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("DESCUENTO");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 90, 30));
+
+        DescuentoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        DescuentoBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DescuentoBoxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(DescuentoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 120, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -232,8 +261,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
         catch(NumberFormatException ex){
             errorCampos += " solo se acepta valores numericos en los campos estock y precio ";
         }
-        
-        
         if (errorCampos != ""){
             Error error = new Error(new javax.swing.JFrame(),true, errorCampos);
             error.setVisible(true);
@@ -246,6 +273,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
             }
             producto_import.close();
             Producto nuevoProducto = new Producto (nombre,Stock,precio,codigo);
+            nuevoProducto.setTipoPromocion(DescuentoBox.getItemAt(DescuentoBox.getSelectedIndex()));
             Archivo.nuevoProducto(nuevoProducto);
             agregarTabla( nuevoProducto);
             barraDescripcion.setText("");
@@ -293,15 +321,20 @@ public class SubMenuProducto extends javax.swing.JDialog {
             Producto nuevos = new Producto(nombre,stock,precio,codigo);  
             Seguridad.Archivo.nuevoProducto(nuevos);
         }
-        for( String key : historialProd.keySet()){
-            Seguridad.Archivo.nuevoPrecioHistorial(new HistorialPrecio(key, historialProd.get(key)));
-        }
-        historialProd.clear();
     }
         
     private void botonModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProductoActionPerformed
-        actualizarArchivo();
-        //botonModificarProducto.setEnabled(false);
+        //actualizarArchivo();
+        int ID = Integer.parseInt(tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 0).toString());
+        String nombre = tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 1).toString();
+        int stock = Integer.parseInt(tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 2).toString());
+        Double precio = Double.parseDouble(tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 3).toString());
+        
+        ModificarProducto modProd = new ModificarProducto(new javax.swing.JFrame(), true, new Producto(nombre, stock, precio, ID) );
+        modProd.setVisible(true);
+        if (modProd.precioModificado()){
+            cargarTabla();
+        }
     }//GEN-LAST:event_botonModificarProductoActionPerformed
 
     private void botonQuitarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonQuitarProductoActionPerformed
@@ -326,8 +359,13 @@ public class SubMenuProducto extends javax.swing.JDialog {
         verHistorial.setVisible(true);
     }//GEN-LAST:event_botonModificarProducto1ActionPerformed
 
+    private void DescuentoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescuentoBoxActionPerformed
+        //nada
+    }//GEN-LAST:event_DescuentoBoxActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> DescuentoBox;
     private javax.swing.JTextField barraDescripcion;
     private javax.swing.JTextField barraPrecio;
     private javax.swing.JTextField barraStock;
@@ -338,6 +376,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaProducto;
     private javax.swing.JLabel tituloPrincipal;

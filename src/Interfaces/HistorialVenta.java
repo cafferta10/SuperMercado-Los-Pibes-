@@ -87,7 +87,7 @@ public class HistorialVenta extends javax.swing.JDialog {
         jLabel3.setText("HISTORIAL VENTA");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 500, 30));
 
-        tarjeta.setForeground(new java.awt.Color(255, 0, 153));
+        tarjeta.setForeground(new java.awt.Color(255, 255, 255));
         tarjeta.setText("TARJETA");
         getContentPane().add(tarjeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 20));
 
@@ -95,7 +95,7 @@ public class HistorialVenta extends javax.swing.JDialog {
         total.setText("TOTAL $ ");
         getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 240, 20));
 
-        fecha.setForeground(new java.awt.Color(255, 0, 102));
+        fecha.setForeground(new java.awt.Color(255, 255, 255));
         fecha.setText("FECHA");
         getContentPane().add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 270, 20));
 

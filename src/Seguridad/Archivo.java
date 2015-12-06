@@ -2,6 +2,7 @@
 package Seguridad;
 
 
+import Entidades.Combos;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import com.csvreader.CsvReader;
 import Entidades.Producto;
 import Entidades.Tarjeta;
 import Entidades.HistorialPrecio;
+import Entidades.Porcentaje;
 import Interfaces.Error;
 
 /**
@@ -71,6 +73,7 @@ public  class Archivo {
             csvOutput.write("Stock");
             csvOutput.write("Precio");
             csvOutput.write("Codigo");
+            csvOutput.write("Descuento");
             csvOutput.endRecord();
             csvOutput.close();
         } catch (IOException e) {
@@ -118,6 +121,8 @@ public  class Archivo {
             csvOutput.write(Integer.toString(nuevoProducto.getStock()));
             csvOutput.write( nuevoProducto.getPrecio().toString() );
             csvOutput.write(Integer.toString(nuevoProducto.getCodigo()));
+            System.out.println(nuevoProducto.getTipoPromocion());
+            csvOutput.write(nuevoProducto.getTipoPromocion());
             csvOutput.endRecord();                   
             
             
@@ -189,22 +194,22 @@ public  class Archivo {
     public static ArrayList listaProducto(){
         ArrayList<Producto> listaProducto = new ArrayList<Producto>();
         try {	
-		CsvReader producto_import = new CsvReader("test/archivo_producto.csv");
-		producto_import.readHeaders();
+            CsvReader producto_import = new CsvReader("test/archivo_producto.csv");
+            producto_import.readHeaders();
 
-		while (producto_import.readRecord())
-		{
-                    String descripcion = producto_import.get("Nombre");
-                    int stock = Integer.parseInt(producto_import.get("Stock"));
-                    Double precio = Double.parseDouble(producto_import.get("Precio"));
-                    int codigo = Integer.parseInt(producto_import.get("Codigo"));
-                                        
-                    listaProducto.add(new Producto(descripcion, stock, precio,codigo));				
-		}
-			
-		producto_import.close();
-			
-			
+            while (producto_import.readRecord())
+            {
+                String descripcion = producto_import.get("Nombre");
+                int stock = Integer.parseInt(producto_import.get("Stock"));
+                Double precio = Double.parseDouble(producto_import.get("Precio"));
+                int codigo = Integer.parseInt(producto_import.get("Codigo"));
+
+                Producto p = new Producto(descripcion, stock, precio,codigo);
+                //p.setPromocion(new Combos("Combo 3x2"));
+                p.setTipoPromocion(producto_import.get("Descuento"));//aca hubo cambios
+                listaProducto.add(p);				
+            }
+            producto_import.close();	  
 	} 
         catch (FileNotFoundException e) {
 		e.printStackTrace();
