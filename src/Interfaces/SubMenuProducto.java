@@ -1,7 +1,6 @@
 
 package Interfaces;
 
-import Entidades.HistorialPrecio;
 import Entidades.Producto;
 import Seguridad.Archivo;
 import com.csvreader.CsvReader;
@@ -10,8 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,8 +17,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Franco Cafferata
  */
 public class SubMenuProducto extends javax.swing.JDialog {
-    
-    private Map<String , Double> historialProd = new HashMap<String, Double>();
     
     
     public SubMenuProducto(java.awt.Frame parent, boolean modal) {
@@ -157,7 +152,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -165,11 +160,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
             }
         });
         tablaProducto.setPreferredSize(new java.awt.Dimension(300, 300));
-        tablaProducto.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                valueChanged(evt);
-            }
-        });
         jScrollPane1.setViewportView(tablaProducto);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 440, 280));
@@ -235,11 +225,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 90, 30));
 
         DescuentoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        DescuentoBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DescuentoBoxActionPerformed(evt);
-            }
-        });
         getContentPane().add(DescuentoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 120, 30));
 
         pack();
@@ -247,7 +232,7 @@ public class SubMenuProducto extends javax.swing.JDialog {
 
     private void agregar(){
         String errorCampos = "";
-        int codigo = 0;
+        int codigo = Integer.parseInt(tablaProducto.getValueAt(tablaProducto.getRowCount()-1, 0).toString()) + 1;
         int Stock = 0;
         Double precio = 0.0;
         String nombre = barraDescripcion.getText();
@@ -266,12 +251,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
             error.setVisible(true);
         }
         else {
-            try  {
-            CsvReader producto_import = new CsvReader("test/archivo_producto.csv");     
-            while (producto_import.readRecord()){
-                codigo ++;
-            }
-            producto_import.close();
             Producto nuevoProducto = new Producto (nombre,Stock,precio,codigo);
             nuevoProducto.setTipoPromocion(DescuentoBox.getItemAt(DescuentoBox.getSelectedIndex()));
             Archivo.nuevoProducto(nuevoProducto);
@@ -280,15 +259,6 @@ public class SubMenuProducto extends javax.swing.JDialog {
             barraPrecio.setText("");
             barraStock.setText("");
         }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } 
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        
-		
-	} 
         
         
     }
@@ -345,23 +315,11 @@ public class SubMenuProducto extends javax.swing.JDialog {
         actualizarArchivo();
     }//GEN-LAST:event_botonQuitarProductoActionPerformed
 
-    private void valueChanged(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_valueChanged
-        int columna = tablaProducto.getSelectedColumn();
-        int fila = tablaProducto.getSelectedRow();
-        if(columna == 3){
-            historialProd.put(tablaProducto.getValueAt(fila, 0).toString(), Double.parseDouble(tablaProducto.getValueAt(fila, 3).toString()));
-        }
-    }//GEN-LAST:event_valueChanged
-
     private void botonModificarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProducto1ActionPerformed
         String key = tablaProducto.getValueAt(tablaProducto.getSelectedRow(), 0).toString();
         Historial verHistorial = new Historial(new javax.swing.JDialog(), true , key);
         verHistorial.setVisible(true);
     }//GEN-LAST:event_botonModificarProducto1ActionPerformed
-
-    private void DescuentoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescuentoBoxActionPerformed
-        //nada
-    }//GEN-LAST:event_DescuentoBoxActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

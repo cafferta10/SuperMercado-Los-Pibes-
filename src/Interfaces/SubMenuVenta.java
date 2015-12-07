@@ -33,7 +33,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
     
     private void inicializarTabla(){
         DefaultTableModel modelo=(DefaultTableModel) tablaVenta.getModel();    
-        String arreglo [] = new String[4];
+        String arreglo [] = new String[5];
         for(Venta n: listaVenta){
             arreglo[0] = Integer.toString(n.getIdFactura());
             arreglo[1] = n.getTarjeta();
@@ -76,7 +76,7 @@ public class SubMenuVenta extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Tarjeta", "Fecha", "Total"
+                "ID", "TARJETA", "FECHA", "TOTAL"
             }
         ) {
             boolean[] canEdit = new boolean [] {

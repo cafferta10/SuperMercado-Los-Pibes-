@@ -71,6 +71,15 @@ public class Producto {
 	this.precio = precio;
         this.codigo = codigo;
     }
+    
+    public Producto(String nombre, int stock, Double precio,int codigo,String descuento) {
+	super();
+	this.nombre = nombre;
+	this.stock = stock;
+	this.precio = precio;
+        this.codigo = codigo;
+        setTipoPromocion(descuento); 
+    }
 
     public Promocion getPromocion() {
         return this.promocion;
@@ -105,7 +114,9 @@ public class Producto {
     
     public Double getPrecio(Integer cantidad){
         Double p = 0.0;
-        p = (this.precio * cantidad) - this.getPromocion().calcularDescuento(precio, cantidad);
+        if (getTipoPromocion() != "Ninguno"){
+            p = (this.precio * cantidad) - this.getPromocion().calcularDescuento(precio, cantidad);
+        }
         return p;
     }
 

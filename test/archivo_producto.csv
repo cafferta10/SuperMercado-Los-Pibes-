@@ -1,4 +1,5 @@
 Nombre,Stock,Precio,Codigo,Descuento
-mermelada,16,12.0,1,25%
-coca Cola,199,3.8,2,Ninguno
-campari,5,40.5,3,Combo 3x2
+coca Cola,0,3.8,2,Ninguno
+campari,5,40.5,3,Ninguno
+toddys,30,23.5,5,Ninguno
+pepsi,32,41.0,6,Combo 8x6

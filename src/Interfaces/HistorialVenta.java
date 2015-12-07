@@ -28,12 +28,13 @@ public class HistorialVenta extends javax.swing.JDialog {
     
     private void  inicializarTabla(Venta venta){
         DefaultTableModel modelo=(DefaultTableModel) tablaVenta.getModel();    
-        String arreglo [] = new String[4];
+        String arreglo [] = new String[5];
         for (Producto prod :venta.getLineaProducto().getListaProducto() ){
             arreglo[0] = (prod.getNombre());
             arreglo[1] = Integer.toString(prod.getStock());
-            arreglo[2] = Double.toString(prod.getPrecio() / prod.getStock());
-            arreglo[3] = Double.toString(prod.getPrecio());
+            arreglo[2] = Double.toString(prod.getPrecio());
+            arreglo[3] = prod.getTipoPromocion();
+            arreglo[4] = Double.toString((prod.getPrecio() * prod.getStock()) - prod.getPrecio(prod.getStock()));
             modelo.addRow(arreglo);
         }
         tablaVenta.setModel(modelo);
@@ -64,11 +65,11 @@ public class HistorialVenta extends javax.swing.JDialog {
 
             },
             new String [] {
-                "DESCRIPCION", "CANTIDAD", "PRECIO U/DES", "TOTAL"
+                "DESCRIPCION", "CANTIDAD", "PRECIO U/DES", "DESCUENTO", "TOTAL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

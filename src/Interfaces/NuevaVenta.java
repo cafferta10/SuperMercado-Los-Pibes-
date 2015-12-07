@@ -280,23 +280,20 @@ public class NuevaVenta extends javax.swing.JDialog {
         if (listaProductos.get(ID).getPromocion() != null){
             descuentoFinal = listaProductos.get(ID).getPrecio(cantidadVendida);
         }
-        else{
-            descuentoFinal = listaProductos.get(ID).getPrecio() * cantidadVendida;
-        }
         if (cantidadVendida > 0){
             listaProductos.get(ID).setStock( listaProductos.get(ID).getStock() - cantidadVendida);
             NumeroProductos.setModel(cambiarCantidad(listaProductos.get(ID).getStock()));
             DefaultTableModel modelo=(DefaultTableModel) tablaVenta.getModel();    
-            String arreglo [] = new String[4];
+            String arreglo [] = new String[5];
             arreglo[0] = Integer.toString(codigoBuscado);
             arreglo[1] = Integer.toString(cantidadVendida);
             arreglo[2] = Double.toString(listaProductos.get(ID).getPrecio());
             arreglo[3] = Double.toString(descuentoFinal);
-            Producto nuevoProducto = new Producto (listaProductos.get(ID).getNombre(),listaProductos.get(ID).getStock(),listaProductos.get(ID).getPrecio(),listaProductos.get(ID).getCodigo());
-            total.setText(Double.toString(Double.parseDouble(total.getText())+descuentoFinal) );
+            arreglo[4] = Double.toString((listaProductos.get(ID).getPrecio() * cantidadVendida) - descuentoFinal);
+            total.setText(Double.toString((listaProductos.get(ID).getPrecio() * cantidadVendida) - descuentoFinal + Double.parseDouble(total.getText())));
             modelo.addRow(arreglo);
             tablaVenta.setModel(modelo);
-            lineaProductos.setListaProducto(new Producto (listaProductos.get(ID).getNombre(),cantidadVendida,descuentoFinal,listaProductos.get(ID).getCodigo()));
+            lineaProductos.setListaProducto(new Producto (listaProductos.get(ID).getNombre(),cantidadVendida,listaProductos.get(ID).getPrecio(),listaProductos.get(ID).getCodigo(),listaProductos.get(ID).getTipoPromocion()));
 
     }
         

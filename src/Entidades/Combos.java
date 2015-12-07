@@ -17,13 +17,16 @@ public class Combos extends Promocion {
         double total = precioProducto * cantidad;
         if( ("Combo 3x2".equals(tipoDescuento)) &&( cantidad%3 == 0)){
             combos =cantidad / 3;
-            total = (precioProducto)*combos;
+            total -= (precioProducto)*combos;
         }
         else{
             if (("Combo 8x6".equals(tipoDescuento))&&(cantidad%8 == 0)){
                 combos = cantidad/ 8;
-                total =  (precioProducto)*combos;
-            }      
+                total -=  (precioProducto)*combos;
+            }  
+            else{
+                total = 0;
+            }
         }
         return total;      
     }

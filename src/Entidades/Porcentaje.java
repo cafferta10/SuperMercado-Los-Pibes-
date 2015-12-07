@@ -17,16 +17,19 @@ public class Porcentaje extends Promocion {
         Double total = precioProducto * cantidad;
         switch (tipoDescuento){
             case "25%":
-                total -=((25*total.intValue()) / 100);
+                total -=((25*total) / 100);
                 break;
             case "15%":
-                total -=((15*total.intValue()) / 100);
+                total -=((15*total) / 100);
                 break;
             case "10%":
-                total -=((10*total.intValue()) / 100);
+                total -=((10*total) / 100);
                 break;
             case "5%":
-                total -=((5*total.intValue()) / 100);
+                total -=((5*total) / 100);
+                break;
+            default:
+                total = 0.0 ;
                 break;
         } 
         return total;
